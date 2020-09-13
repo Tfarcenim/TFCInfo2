@@ -1,0 +1,15 @@
+[
+{
+  "modid": "tfcinfo",
+  "name": "Terrafirmacraft Info",
+  "description": "extra tfc stuff.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Tfarecmin"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

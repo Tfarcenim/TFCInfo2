@@ -1,0 +1,18 @@
+{
+  "type": "tfcinfo:thermometer",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dye"
+    },
+    {
+      "type": "tfcinfo:spirits"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:spirit_thermometer"
+  }
+}

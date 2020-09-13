@@ -1,0 +1,3 @@
+item.tfcinfo.spirit_thermometer.name=Spirit Thermometer
+item.tfcinfo.recent_temperature_records.name=Recent Temperature Records
+tfcinfo.tooltip.date=Date : %s %s, %s

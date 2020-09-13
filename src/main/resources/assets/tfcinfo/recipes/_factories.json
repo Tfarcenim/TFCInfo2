@@ -1,0 +1,8 @@
+{
+  "ingredients": {
+    "spirits": "tfar.tfcinfo.recipes.SpiritIngredientFactory"
+  },
+  "recipes": {
+    "thermometer": "tfar.tfcinfo.recipes.RecipeThermometerFactory"
+  }
+}
