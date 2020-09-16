@@ -1,19 +1,26 @@
 package tfar.tfcinfo;
 
-public class Stages {
-	public static final String averageTempKnowledge = "avg_temp_knowledge";
-	public static final String minTempKnowledge = "min_temp_knowledge";
-	public static final String maxTempKnowledge = "max_temp_knowledge";
-	public static final String rainfallKnowledge = "rainfall_knowledge";
-	public static final String monsterFerocityKnowledge = "monster_ferocity_knowledge";
-	public static final String dateKnowledge = "date_knowledge";
-	public static final String timeKnowledge = "time_knowledge";
-	public static final String constellationKnowledge = "constellation_knowledge";
+import tfar.tfcinfo.util.KnowledgeMemoryPair;
 
-	public static final String memorizedRegionalTemp = "regional_temp_memory";
-	public static final String memorizedAverageTemp = "avg_temp_memory";
-	public static final String memorizedMinTemp = "min_temp_memory";
-	public static final String memorizedMaxTemp = "max_temp_memory";
-	public static final String rainfallMemorized = "rainfall_memory";
+public class Stages {
+
+	public static final KnowledgeMemoryPair regionalTemp = new KnowledgeMemoryPair("regional_temp");
+	public static final KnowledgeMemoryPair averageTemp = new KnowledgeMemoryPair("avg_temp");
+	public static final KnowledgeMemoryPair minTemp =  new KnowledgeMemoryPair("min_temp");
+	public static final KnowledgeMemoryPair maxTemp =  new KnowledgeMemoryPair("max_temp");
+	public static final KnowledgeMemoryPair rainfall =  new KnowledgeMemoryPair("rainfall");
+	public static final KnowledgeMemoryPair monsterFerocity =  new KnowledgeMemoryPair("monster_ferocity");
+	public static final KnowledgeMemoryPair date =  new KnowledgeMemoryPair("date");
+	public static final KnowledgeMemoryPair time =  new KnowledgeMemoryPair("time");
+	public static final KnowledgeMemoryPair moonPhase =  new KnowledgeMemoryPair("moon_phase");
+	public static final KnowledgeMemoryPair slimeChunk = new KnowledgeMemoryPair("slime_chunk");
+	public static final KnowledgeMemoryPair spawnProtectionTimer = new KnowledgeMemoryPair("spawn_protection_timer");
+
+	//display X coord
+	public static final KnowledgeMemoryPair longitudinal =  new KnowledgeMemoryPair("longitudinal");
+	//display Y coord
+	public static final KnowledgeMemoryPair depth =  new KnowledgeMemoryPair("depth");
+	//display Z coord
+	public static final KnowledgeMemoryPair constellation =  new KnowledgeMemoryPair("constellation");
 
 }

@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import tfar.tfcinfo.event.ClientForgeEvents;
+import tfar.tfcinfo.event.TooltipHandler;
 
 // not threadsafe!
 public class S2CSyncTimePacket implements IMessage {
@@ -43,8 +43,8 @@ public class S2CSyncTimePacket implements IMessage {
     }
 
     private void handle(S2CSyncTimePacket message, MessageContext ctx) {
-      ClientForgeEvents.avg_temp_knowledge_start = message.avg_temp_knowledge_start;
-      ClientForgeEvents.max_temp_knowledge_start = message.max_temp_knowledge_start;
+      TooltipHandler.avg_temp_knowledge_start = message.avg_temp_knowledge_start;
+      TooltipHandler.max_temp_knowledge_start = message.max_temp_knowledge_start;
     }
   }
 }

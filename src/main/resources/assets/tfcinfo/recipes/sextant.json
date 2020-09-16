@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " X ",
+    "XXX"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "minecraft:glass_pane"
+      }
+    ],
+    "X": {
+        "type": "forge:ore_dict",
+        "ore": "ingotIron"
+      }
+  },
+  "result": {
+    "item": "tfcinfo:sextant"
+  }
+}

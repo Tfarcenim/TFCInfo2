@@ -7,10 +7,10 @@ import tfar.tfcinfo.Stages;
 public class AddMemorizationCommand extends CommandTreeBase {
 
 	public AddMemorizationCommand() {
-		addSubcommand(new MemorizationCommand(Stages.memorizedAverageTemp));
-		addSubcommand(new MemorizationCommand(Stages.memorizedMinTemp));
-		addSubcommand(new MemorizationCommand(Stages.memorizedMaxTemp));
-		addSubcommand(new MemorizationCommand(Stages.memorizedRegionalTemp));
+		addSubcommand(new MemorizationCommand(Stages.averageTemp.memory()));
+		addSubcommand(new MemorizationCommand(Stages.minTemp.memory()));
+		addSubcommand(new MemorizationCommand(Stages.maxTemp.memory()));
+		addSubcommand(new MemorizationCommand(Stages.regionalTemp.memory()));
 	}
 
 	@Override

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfc:mortar"
+    },
+    {
+      "item": "tfc:powder/malachite"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "dirt"
+    },
+    {
+      "type" : "tfcinfo:fluid",
+      "fluid" : "hot_water"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:slime_sample"
+  }
+}

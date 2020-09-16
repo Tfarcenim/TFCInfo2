@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#X#",
+    " # "
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "minecraft:dye",
+        "data": 15
+      }
+    ],
+    "X": {
+      "item": "tfcinfo:calendar"
+    }
+  },
+  "result": {
+    "item": "tfcinfo:moon_chart"
+  }
+}

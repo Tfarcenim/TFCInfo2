@@ -15,6 +15,8 @@ public class TimeData implements INBTSerializable<NBTTagCompound> {
 	public long date_knowledge_start = -1;
 	public long time_knowledge_start = -1;
 
+	public long longitudinal_memorization_start = -1;
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbtTagCompound = new NBTTagCompound();
@@ -25,6 +27,9 @@ public class TimeData implements INBTSerializable<NBTTagCompound> {
 		nbtTagCompound.setLong("constellation_knowledge_start",constellation_knowledge_start);
 		nbtTagCompound.setLong("time_knowledge_start",time_knowledge_start);
 		nbtTagCompound.setLong("date_knowledge_start",date_knowledge_start);
+
+		nbtTagCompound.setLong("longitudinal_memorization_start",longitudinal_memorization_start);
+
 		return nbtTagCompound;
 	}
 
@@ -37,5 +42,7 @@ public class TimeData implements INBTSerializable<NBTTagCompound> {
 		constellation_knowledge_start = nbt.getLong("constellation_knowledge_start");
 		date_knowledge_start = nbt.getLong("date_knowledge_start");
 		time_knowledge_start = nbt.getLong("time_knowledge_start");
+
+		longitudinal_memorization_start = nbt.getLong("longitudinal_memorization_start");
 	}
 }

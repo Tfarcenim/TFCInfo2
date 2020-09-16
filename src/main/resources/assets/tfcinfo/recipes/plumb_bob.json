@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "tfc:animal/product/wool_yarn"
+      }
+    ],
+    "X": {
+        "type": "forge:ore_dict",
+        "ore": "ingotCopper"
+      }
+  },
+  "result": {
+    "item": "tfcinfo:plumb_bob"
+  }
+}

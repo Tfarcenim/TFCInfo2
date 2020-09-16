@@ -1,6 +1,9 @@
 package tfar.tfcinfo.event;
 
+import net.darkhax.bookshelf.data.MoonPhase;
 import net.darkhax.gamestages.GameStageHelper;
+import net.dries007.tfc.client.TFCGuiHandler;
+import net.dries007.tfc.client.button.GuiButtonPlayerInventoryTab;
 import net.dries007.tfc.util.calendar.CalendarTFC;
 import net.dries007.tfc.util.calendar.ICalendarFormatted;
 import net.dries007.tfc.util.calendar.Month;
@@ -10,23 +13,23 @@ import net.dries007.tfc.world.classic.chunkdata.ChunkDataTFC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import tfar.tfcinfo.ModItems;
 import tfar.tfcinfo.Stages;
-import tfar.tfcinfo.TFCInfoConfig;
 import tfar.tfcinfo.Utils;
+import tfar.tfcinfo.util.KnowledgeMemoryPair;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,14 +39,6 @@ import static net.minecraft.util.text.TextFormatting.WHITE;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientForgeEvents {
-
-	public static long avg_temp_knowledge_start = -1;
-	public static long max_temp_knowledge_start = -1;
-	public static long rainfall_knowledge_start = -1;
-	public static long monster_ferocity_knowledge_start = -1;
-	public static long constellation_knowledge_start = -1;
-
-	public static final Minecraft mc = Minecraft.getMinecraft();
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void lessDebugInfo(RenderGameOverlayEvent.Text e) {
@@ -56,7 +51,7 @@ public class ClientForgeEvents {
 		deleteLeftLines(left);
 
 		//then add new lines
-		addLeftLines(left,mc.player);
+		addLeftLines(left, TooltipHandler.mc.player);
 
 		//then modify existing
 		for (int i = 0; i < left.size(); i++) {
@@ -72,7 +67,7 @@ public class ClientForgeEvents {
 			if (s.contains("fps") && !s.contains("Minecraft")) continue;
 
 			if (s.contains("Local Difficulty")) {
-				String s1 = canDisplayMonsterFerocity(player) ? s.split("\\(")[0] : "";
+				String s1 = DisplayHelper.canDisplayMonsterFerocity(player) ? s.split("\\(")[0] : "";
 				left.set(i, s1);
 			}
 		}
@@ -88,27 +83,27 @@ public class ClientForgeEvents {
 		for (int i = 0; i < right.size(); i++) {
 			String s = right.get(i);
 			if (s.contains("Region:")) {
-				BlockPos blockpos = new BlockPos(mc.getRenderViewEntity().posX, mc.getRenderViewEntity().getEntityBoundingBox().minY, mc.getRenderViewEntity().posZ);
-				Chunk chunk = mc.world.getChunk(blockpos);
-				if (mc.world.isBlockLoaded(blockpos) && !chunk.isEmpty()) {
+				BlockPos blockpos = new BlockPos(TooltipHandler.mc.getRenderViewEntity().posX, TooltipHandler.mc.getRenderViewEntity().getEntityBoundingBox().minY, TooltipHandler.mc.getRenderViewEntity().posZ);
+				Chunk chunk = TooltipHandler.mc.world.getChunk(blockpos);
+				if (TooltipHandler.mc.world.isBlockLoaded(blockpos) && !chunk.isEmpty()) {
 					final int x = blockpos.getX() & 15, z = blockpos.getZ() & 15;
 					ChunkDataTFC data = chunk.getCapability(ChunkDataProvider.CHUNK_DATA_CAPABILITY, null);
 
 					s = "";
-					if (canDisplayRegionalTemp(mc.player)) {
+					if (DisplayHelper.canDisplayRegionalTemp(TooltipHandler.mc.player)) {
 						s += String.format("%sRegion: %s%.1f\u00b0C%s", GRAY, WHITE, data.getRegionalTemp(), GRAY);
 					}
 
-					if (canDisplayAverageTemp(mc.player)) {
+					if (DisplayHelper.canDisplayAverageTemp(TooltipHandler.mc.player)) {
 						s += String.format("Avg: %s%.1f\u00b0C%s", WHITE, data.getAverageTemp(), GRAY);
 					}
 
-					if (canDisplayMaxTemp(mc.player)) {
+					if (DisplayHelper.canDisplayMaxTemp(TooltipHandler.mc.player)) {
 						s += String.format("C%s Max: %s%.1f\u00b0C%s", GRAY,
 										WHITE, ClimateHelper.monthFactor(data.getRegionalTemp(), Month.JULY.getTemperatureModifier(), blockpos.getZ()), GRAY);
 					}
 
-					if (canDisplayMinTemp(mc.player)) {
+					if (DisplayHelper.canDisplayMinTemp(TooltipHandler.mc.player)) {
 						s += String.format("C%s Min: %s%.1f\u00b0C%s", GRAY,
 										WHITE, ClimateHelper.monthFactor(data.getRegionalTemp(), Month.JANUARY.getTemperatureModifier(), blockpos.getZ()), GRAY);
 					}
@@ -117,22 +112,33 @@ public class ClientForgeEvents {
 			}
 
 			if (s.contains("Rainfall")) {
-				if (!canDisplayRainfall(player)) {
+				if (!DisplayHelper.canDisplayRainfall(player)) {
 					right.set(i, "");
 				}
 			}
 
 			if (s.contains("Date")) {
 				String s1 = "";
-				if (canDisplayDate(player)) {
+				if (DisplayHelper.canDisplayDate(player)) {
 					s1 = getDate();
 				}
 				//list.add(I18n.format("tfc.tooltip.debug_times", CalendarTFC.PLAYER_TIME.getTicks(), CalendarTFC.CALENDAR_TIME.getTicks()));
 				right.set(i,s1);
 
-				if (canDisplayTime(player)) {
+				if (DisplayHelper.canDisplayTime(player)) {
 					right.add(i,getTime());
 				}
+			}
+		}
+	}
+
+	//disable calendar tab
+	@SubscribeEvent
+	public static void buttonClick(GuiScreenEvent.ActionPerformedEvent.Pre e) {
+		if ((e.getButton() instanceof GuiButtonPlayerInventoryTab)) {
+			GuiButtonPlayerInventoryTab tab = (GuiButtonPlayerInventoryTab)e.getButton();
+			if (tab.getGuiType() == TFCGuiHandler.Type.CALENDAR && !hasCalendarTab(Minecraft.getMinecraft().player)) {
+				e.setCanceled(true);
 			}
 		}
 	}
@@ -144,16 +150,46 @@ public class ClientForgeEvents {
 	}
 
 	public static void addLeftLines(List<String> left,EntityPlayer player) {
-		if (canDisplayX(player)) {
+		if (DisplayHelper.canDisplayX(player)) {
 			left.add("X: "+ player.posX);
 		}
 
-		if (canDisplayY(player)) {
+		if (DisplayHelper.canDisplayY(player)) {
 			left.add("Y: "+ player.posY);
 		}
 
-		if (canDisplayZ(player)) {
+		if (DisplayHelper.canDisplayZ(player)) {
 			left.add("Z: "+ player.posZ);
+		}
+		if (canDisplayFacing(player)) {
+			EnumFacing enumfacing = player.getHorizontalFacing();
+			String s = "Invalid";
+
+			switch (enumfacing)
+			{
+				case NORTH:
+					s = "Towards negative Z";
+					break;
+				case SOUTH:
+					s = "Towards positive Z";
+					break;
+				case WEST:
+					s = "Towards negative X";
+					break;
+				case EAST:
+					s = "Towards positive X";
+			}
+
+			left.add("Facing " + s);
+		}
+
+		if (DisplayHelper.canDisplayMoonPhase(player)) {
+			String phaseName = MoonPhase.getCurrentPhase().getPhaseName();
+			left.add("Moon Phase: " + phaseName);
+		}
+
+		if (DisplayHelper.canDisplaySlimeChunks(player)) {
+			left.add("Slime Chunk: "+ TooltipHandler.slime_chunk);
 		}
 	}
 
@@ -176,94 +212,25 @@ public class ClientForgeEvents {
 	public static void onTooltip(ItemTooltipEvent e) {
 		EntityPlayer player = e.getEntityPlayer();
 		if (player != null) {
-			if (e.getItemStack().getItem() == TFCInfoConfig.avg_temp_unlock) {
-				long current_time = player.world.getTotalWorldTime();
-				if (!GameStageHelper.hasStage(player, Stages.averageTempKnowledge) && avg_temp_knowledge_start > -1) {
-					long remaining_time = (long) (TFCInfoConfig.avg_temp_knowledge_requirement - current_time + avg_temp_knowledge_start);
-					long days = remaining_time / 20 / 60 / 20;
-					e.getToolTip().add("Remaining Time to unlock Average Temperature knowledge: " + days  + " days");
-				} else if (!GameStageHelper.hasStage(player, Stages.memorizedAverageTemp) && avg_temp_knowledge_start > -1) {
-					long remaining_time = (long) (TFCInfoConfig.avg_temp_memorization_requirement - current_time + avg_temp_knowledge_start);
-					long days = remaining_time / 20 / 60 / 20;
-					e.getToolTip().add("Remaining Time to unlock Average Temperature memorization: " + days  + " days");
-				}
-			} else if  (e.getItemStack().getItem() == TFCInfoConfig.record_temp_unlock) {
-				long current_time = player.world.getTotalWorldTime();
-				if (!GameStageHelper.hasStage(player, Stages.maxTempKnowledge) && max_temp_knowledge_start > -1) {
-					long remaining_time = (long) (TFCInfoConfig.max_temp_knowledge_requirement - current_time + max_temp_knowledge_start);
-					long days = remaining_time / 20 / 60 / 20;
-					e.getToolTip().add("Remaining Time to unlock Maximum Temperature knowledge: " + days  + " days");
-				}
-
-				else if (!GameStageHelper.hasStage(player, Stages.memorizedMaxTemp) && max_temp_knowledge_start > -1) {
-					long remaining_time = (long) (TFCInfoConfig.max_temp_memorization_requirement - current_time + max_temp_knowledge_start);
-					long days = remaining_time / 20 / 60 / 20;
-					e.getToolTip().add("Remaining Time to unlock Maximum Temperature memorization: " + days  + " days");
-				}
-
-
-				if (!GameStageHelper.hasStage(player, Stages.minTempKnowledge) && max_temp_knowledge_start > -1) {
-					long remaining_time = (long) (TFCInfoConfig.max_temp_knowledge_requirement - current_time + max_temp_knowledge_start);
-					long days = remaining_time / 20 / 60 / 20;
-					e.getToolTip().add("Remaining Time to unlock Minimum Temperature knowledge: " + days  + " days");
-				}
-
-				else if (!GameStageHelper.hasStage(player, Stages.memorizedMinTemp) && max_temp_knowledge_start > -1) {
-					long remaining_time = (long) (TFCInfoConfig.min_temp_memorization_requirement - current_time + max_temp_knowledge_start);
-					long days = remaining_time / 20 / 60 / 20;
-					e.getToolTip().add("Remaining Time to unlock Minimum Temperature memorization: " + days  + " days");
-				}
-			}
+			ItemStack stack = e.getItemStack();
+				TooltipHandler.addTemperatureKnowledgeRequirements(stack,player,e.getToolTip());
 		}
 	}
 
-	public static boolean canDisplayRegionalTemp(EntityPlayer player) {
-		return GameStageHelper.hasStage(player, Stages.memorizedRegionalTemp) ||
-						(player.inventory.hasItemStack(new ItemStack(ModItems.SPIRIT_THERMOMETER)));
+
+	public static boolean hasMemoryOrKnowledge(EntityPlayer player, KnowledgeMemoryPair pair) {
+		return GameStageHelper.hasStage(player,pair.memory()) || hasItemWithKnowledge(player,pair.knowledge());
 	}
 
-	public static boolean canDisplayAverageTemp(EntityPlayer player) {
-		return GameStageHelper.hasStage(player, Stages.memorizedAverageTemp) ||
-						(GameStageHelper.hasStage(player, Stages.averageTempKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.avg_temp_unlock)));
+	public static boolean hasItemWithKnowledge(EntityPlayer player, String stage) {
+		return GameStageHelper.hasStage(player, stage) && Utils.hasOreDictItem(stage,player.inventory);
 	}
 
-	public static boolean canDisplayMaxTemp(EntityPlayer player) {
-		return GameStageHelper.hasStage(player, Stages.memorizedMaxTemp) ||
-						(GameStageHelper.hasStage(player, Stages.maxTempKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.record_temp_unlock)));
+	public static boolean canDisplayFacing(EntityPlayer player) {
+		return player.inventory.hasItemStack(new ItemStack(Items.COMPASS));
 	}
 
-	public static boolean canDisplayMinTemp(EntityPlayer player) {
-		return GameStageHelper.hasStage(player, Stages.memorizedMinTemp) ||
-						(GameStageHelper.hasStage(player, Stages.minTempKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.record_temp_unlock)));
-	}
-
-	public static boolean canDisplayRainfall(EntityPlayer player) {
-		return GameStageHelper.hasStage(player, Stages.rainfallMemorized) ||
-						(GameStageHelper.hasStage(player, Stages.rainfallKnowledge) && Utils.hasEmptyBucket(player));
-	}
-
-	public static boolean canDisplayDate(EntityPlayer player) {
-		return (GameStageHelper.hasStage(player, Stages.dateKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.date_unlock)));
-	}
-
-	public static boolean canDisplayTime(EntityPlayer player) {
-		return (GameStageHelper.hasStage(player, Stages.timeKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.time_unlock)));
-	}
-
-	public static boolean canDisplayX(EntityPlayer player) {
-		return (GameStageHelper.hasStage(player, Stages.timeKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.constellation_unlock)));
-	}
-
-	public static boolean canDisplayY(EntityPlayer player) {
-		return (GameStageHelper.hasStage(player, Stages.timeKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.constellation_unlock)));
-	}
-
-	public static boolean canDisplayZ(EntityPlayer player) {
-		return (GameStageHelper.hasStage(player, Stages.timeKnowledge) && player.inventory.hasItemStack(new ItemStack(TFCInfoConfig.constellation_unlock)));
-	}
-
-
-	public static boolean canDisplayMonsterFerocity(EntityPlayer player) {
-		return (GameStageHelper.hasStage(player, Stages.monsterFerocityKnowledge) && Utils.hasEmptyBucket(player));
+	public static boolean hasCalendarTab(EntityPlayer player) {
+		return Utils.hasOreDictItem(Stages.date.base(),player.inventory);
 	}
 }

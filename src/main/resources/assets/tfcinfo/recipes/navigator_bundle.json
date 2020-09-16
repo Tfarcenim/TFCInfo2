@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:almanac"
+    },
+    {
+      "item": "minecraft:clock"
+    },
+    {
+      "item": "tfcinfo:sextant"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:navigator_bundle"
+  }
+}

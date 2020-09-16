@@ -11,21 +11,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import tfar.tfcinfo.ModItems;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientModEvents {
 
 	@SubscribeEvent
 	public static void models(ModelRegistryEvent e) {
-		registerItemModels(
-						ModItems.RECENT_TEMPERATURE_RECORDS,
-						ModItems.SPIRIT_THERMOMETER
-		);
+		registerItemModels(ModItems.items);
+		registerItemModel(ModItems.SLIME_COMPASS);
+		registerItemModel(ModItems.SLIME_SAMPLE);
 	}
 
 
-	public static void registerItemModels(Item... items) {
-		Arrays.stream(items).forEach(ClientModEvents::registerItemModel);
+	public static void registerItemModels(List<Item> items) {
+		items.forEach(ClientModEvents::registerItemModel);
 	}
 
 	public static void registerItemModel(Item item) {
@@ -33,6 +33,6 @@ public class ClientModEvents {
 	}
 
 	public static void registerItemModel(Block block) {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block),0,new ModelResourceLocation(Item.getItemFromBlock(block).getRegistryName(), "inventory"));
+		registerItemModel(Item.getItemFromBlock(block));
 	}
 }
