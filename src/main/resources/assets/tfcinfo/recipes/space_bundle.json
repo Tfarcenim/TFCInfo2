@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:plumb_bob"
+    },
+    {
+      "item": "tfcinfo:navigator_bundle"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:space_bundle"
+  }
+}

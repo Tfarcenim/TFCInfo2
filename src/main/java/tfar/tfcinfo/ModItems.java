@@ -29,11 +29,16 @@ public class ModItems {
     public static Item PLUMB_BOB = create();
     public static Item SEXTANT = create();
     public static Item NAVIGATOR_BUNDLE = create();
+    public static Item PIONEER_GEAR = create();
     public static Item MOON_CHART = create();
     public static Item SLIME_SAMPLE = create();
     public static Item RANGER_BUNDLE = create();
+    public static Item ENHANCED_RANGER_BUNDLE = create();
     public static Item TEMPERATURE_BUNDLE = create();
     public static Item ENHANCED_TEMPERATURE_BUNDLE = create();
+    public static Item SPACE_BUNDLE = create();
+    public static Item ENHANCED_SPACE_BUNDLE = create();
+
     public static Item SLIME_COMPASS = new SlimeCompassItem().setCreativeTab(tab);
 
     public static Item create() {
@@ -57,7 +62,12 @@ public class ModItems {
                 MOON_CHART.setRegistryName("moon_chart").setTranslationKey(TerrafirmaCraftInfo.MODID + ".moon_chart"),
                 SLIME_SAMPLE.setRegistryName("slime_sample").setTranslationKey(TerrafirmaCraftInfo.MODID + ".slime_sample"),
                 TEMPERATURE_BUNDLE.setRegistryName("temperature_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".temperature_bundle"),
-                ENHANCED_TEMPERATURE_BUNDLE.setRegistryName("enhanced_temperature_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".enhanced_temperature_bundle")
-                );
+                ENHANCED_TEMPERATURE_BUNDLE.setRegistryName("enhanced_temperature_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".enhanced_temperature_bundle"),
+                RANGER_BUNDLE.setRegistryName("ranger_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".ranger_bundle"),
+                ENHANCED_RANGER_BUNDLE.setRegistryName("enhanced_ranger_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".enhanced_ranger_bundle"),
+                PIONEER_GEAR.setRegistryName("pioneer_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".pioneer_gear"),
+                SPACE_BUNDLE.setRegistryName("space_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".space_bundle"),
+                ENHANCED_SPACE_BUNDLE.setRegistryName("enhanced_space_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".enhanced_space_bundle")
+        );
     }
 }

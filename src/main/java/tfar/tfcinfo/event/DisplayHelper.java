@@ -46,7 +46,7 @@ public class DisplayHelper {
     }
 
     public static boolean canDisplayMonsterFerocity(EntityPlayer player) {
-        return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.monsterFerocity);
+        return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.localDifficulty);
     }
 
     public static boolean canDisplayMoonPhase(EntityPlayer player) {
@@ -59,5 +59,9 @@ public class DisplayHelper {
 
     public static boolean canDisplaySpawnProtectionTimer(EntityPlayer player) {
         return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.spawnProtectionTimer);
+    }
+
+    public static boolean canDisplayLightLevel(EntityPlayer player) {
+        return Utils.hasOreDictItem(Stages.lightLevel.base(),player.inventory);
     }
 }

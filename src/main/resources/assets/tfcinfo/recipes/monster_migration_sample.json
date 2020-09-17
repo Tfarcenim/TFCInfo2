@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    }
+
+  ],
+  "result": {
+    "item": "tfcinfo:monster_migration_sample"
+  }
+}

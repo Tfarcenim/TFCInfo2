@@ -1,5 +1,6 @@
 package tfar.tfcinfo;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,17 +32,19 @@ public class TerrafirmaCraftInfo {
         //holding these grants knowledge
         registerOres(Stages.moonPhase.base(),ModItems.ALMANAC,ModItems.MOON_CHART,ModItems.NAVIGATOR_BUNDLE);
         registerOres(Stages.time.base(),ModItems.NAVIGATOR_BUNDLE);
-        registerOres(Stages.date.base(),ModItems.NAVIGATOR_BUNDLE);
-        registerOres(Stages.rainfall.base(),ModItems.RANGER_BUNDLE);
+        registerOres(Stages.date.base(),ModItems.CALENDAR,ModItems.NAVIGATOR_BUNDLE);
+        registerOres(Stages.rainfall.base(),ModItems.RANGER_BUNDLE,ModItems.PIONEER_GEAR);
         registerOres(Stages.averageTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE);
         registerOres(Stages.maxTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE);
         registerOres(Stages.minTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE);
         registerOres(Stages.slimeChunk.base(),ModItems.RANGER_BUNDLE);
         registerOres(Stages.spawnProtectionTimer.base(),ModItems.RANGER_BUNDLE);
+        registerOres(Stages.localDifficulty.base(),ModItems.ENHANCED_RANGER_BUNDLE);
+        registerOres(Stages.facing.base(), Items.COMPASS,ModItems.ENHANCED_SPACE_BUNDLE);
 
         //holding these unlocks knowledge
-        registerOres(Stages.maxTemp.knowledge(),ModItems.RECENT_TEMPERATURE_RECORDS,ModItems.TEMPERATURE_BUNDLE);
-        registerOres(Stages.minTemp.knowledge(),ModItems.RECENT_TEMPERATURE_RECORDS,ModItems.TEMPERATURE_BUNDLE);
+        registerOres(Stages.maxTemp.knowledge(),ModItems.RECENT_TEMPERATURE_RECORDS,ModItems.TEMPERATURE_BUNDLE,ModItems.PIONEER_GEAR);
+        registerOres(Stages.minTemp.knowledge(),ModItems.RECENT_TEMPERATURE_RECORDS,ModItems.TEMPERATURE_BUNDLE,ModItems.PIONEER_GEAR);
 
 
         registerOres(Stages.spawnProtectionTimer.knowledge(),ModItems.MONSTER_MIGRATION_SAMPLE);
@@ -52,13 +55,13 @@ public class TerrafirmaCraftInfo {
                 ModItems.CALENDAR,ModItems.ALMANAC,ModItems.NAVIGATOR_BUNDLE);
 
         //x
-        registerOres(Stages.longitudinal.knowledge(),ModItems.SEXTANT,ModItems.NAVIGATOR_BUNDLE);
+        registerOres(Stages.longitudinal.knowledge(),ModItems.SEXTANT,ModItems.NAVIGATOR_BUNDLE,ModItems.SPACE_BUNDLE);
 
         //y
-        registerOres(Stages.depth.knowledge(),ModItems.PLUMB_BOB);
+        registerOres(Stages.depth.knowledge(),ModItems.PLUMB_BOB,ModItems.SPACE_BUNDLE);
 
         //z
-        registerOres(Stages.constellation.knowledge(),ModItems.NAVIGATOR_BUNDLE);
+        registerOres(Stages.constellation.knowledge(),ModItems.NAVIGATOR_BUNDLE,ModItems.SPACE_BUNDLE);
 
     }
 
