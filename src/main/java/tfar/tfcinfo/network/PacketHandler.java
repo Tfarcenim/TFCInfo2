@@ -18,5 +18,6 @@ public class PacketHandler {
   public static void registerMessages() {
     // Register messages which are sent from the client to the server here:
     INSTANCE.registerMessage(S2CSyncTimePacket.Handler.class, S2CSyncTimePacket.class, 0, Side.CLIENT);
+    INSTANCE.registerMessage(S2CSyncSlimeChunkPacket.Handler.class, S2CSyncSlimeChunkPacket.class, 1, Side.CLIENT);
   }
 }

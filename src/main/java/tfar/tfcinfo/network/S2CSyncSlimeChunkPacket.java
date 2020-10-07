@@ -38,7 +38,7 @@ public class S2CSyncSlimeChunkPacket implements IMessage {
     }
 
     private void handle(S2CSyncSlimeChunkPacket message, MessageContext ctx) {
-
+      TooltipHandler.slime_chunk = message.slime_chunk;
     }
   }
 }

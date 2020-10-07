@@ -1,10 +1,11 @@
 package tfar.tfcinfo.event;
 
+import net.darkhax.gamestages.GameStageHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import tfar.tfcinfo.Stages;
 import tfar.tfcinfo.Utils;
 
-public class DisplayHelper {
+public class ClientHelper {
     public static boolean canDisplayRegionalTemp(EntityPlayer player) {
         return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.regionalTemp);
     }
@@ -46,7 +47,7 @@ public class DisplayHelper {
     }
 
     public static boolean canDisplayMonsterFerocity(EntityPlayer player) {
-        return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.localDifficulty);
+        return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.monsterFerocity);
     }
 
     public static boolean canDisplayMoonPhase(EntityPlayer player) {
@@ -58,10 +59,22 @@ public class DisplayHelper {
     }
 
     public static boolean canDisplaySpawnProtectionTimer(EntityPlayer player) {
-        return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.spawnProtectionTimer);
+        return ClientForgeEvents.hasMemoryOrKnowledge(player, Stages.monsterMigration);
     }
 
     public static boolean canDisplayLightLevel(EntityPlayer player) {
         return Utils.hasOreDictItem(Stages.lightLevel.base(),player.inventory);
+    }
+
+    public static boolean canDisplayBiome(EntityPlayer player) {
+        return Utils.hasOreDictItem(Stages.biome.base(),player.inventory);
+    }
+
+    public static boolean canDisplayNutrition(EntityPlayer player) {
+        return GameStageHelper.hasStage(player,Stages.nutrition.memory());
+    }
+
+    public static boolean canDisplayHwyla(EntityPlayer player) {
+        return Utils.hasOreDictItem(Stages.hwyla.base(),player.inventory);
     }
 }

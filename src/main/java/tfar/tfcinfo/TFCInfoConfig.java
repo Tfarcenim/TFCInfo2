@@ -66,7 +66,7 @@ public class TFCInfoConfig {
 	public static double biome_memory_requirement = 96 * ticksToDays;
 
 	@Config.Name("Rainfall Memorization "+s)
-	public static double rainfall_memorization_requirement = 8 * ticksToDays;
+	public static double rainfall_memory_requirement = 96 * ticksToDays;
 
 	@Config.Name("Date Memorization "+s)
 	public static double date_memory_requirement = 96 * ticksToDays;
@@ -98,6 +98,19 @@ public class TFCInfoConfig {
 					"sake",
 					"vodka",
 					"cider"};
+
+	@Config.Name("Local Difficulty Memorization "+s)
+	@Config.Comment("Required to display Local Difficulty")
+	public static double monster_ferocity_memory_requirement = 64 * ticksToDays;
+
+	@Config.Name("Spawn Timer Memorization "+s)
+	@Config.Comment("Required to display Spawn Timer")
+	public static double monster_migration_memory_requirement = 48 * ticksToDays;
+
+	@Config.Name("Nutrition Memorization "+s)
+	@Config.Comment("Required to display Nutrition tab")
+	public static double nutrition_memory_requirement = 24 * ticksToDays;
+	public static double time_memory_requirement = 192 * ticksToDays;
 
 
 	//fields

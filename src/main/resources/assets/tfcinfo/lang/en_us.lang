@@ -1,3 +1,11 @@
-item.tfcinfo.spirit_thermometer.name=Spirit Thermometer
+item.tfcinfo.calendar.name=Calendar
+item.tfcinfo.monster_migration_sample.name=Monster Migration Sample
+item.tfcinfo.moon_chart.name=Moon Chart
+item.tfcinfo.pda.name=PDA
+item.tfcinfo.plumb_bob.name=Plumb Bob
 item.tfcinfo.recent_temperature_records.name=Recent Temperature Records
+item.tfcinfo.slime_compass.name=Slime Compass
+item.tfcinfo.spirit_thermometer.name=Spirit Thermometer
+item.tfcinfo.survival_guide.name=Survival Guide
+
 tfcinfo.tooltip.date=Date : %s %s, %s

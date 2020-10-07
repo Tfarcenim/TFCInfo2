@@ -2,36 +2,35 @@ package tfar.tfcinfo.network;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import tfar.tfcinfo.TimeData;
 import tfar.tfcinfo.event.TooltipHandler;
 
 // not threadsafe!
 public class S2CSyncTimePacket implements IMessage {
 
-  public long avg_temp_knowledge_start = -1;
-  public long max_temp_knowledge_start = -1;
+
+  private TimeData timeData = new TimeData();
 
 
   public S2CSyncTimePacket() {
   }
 
-  public S2CSyncTimePacket(long avg_temp_knowledge_start,long max_temp_knowledge_start) {
-    this.avg_temp_knowledge_start = avg_temp_knowledge_start;
-    this.max_temp_knowledge_start = max_temp_knowledge_start;
+  public S2CSyncTimePacket(TimeData timeData) {
+    this.timeData = timeData;
   }
 
   @Override
   public void fromBytes(ByteBuf buf) {
-    this.avg_temp_knowledge_start = buf.readLong();
-    this.max_temp_knowledge_start = buf.readLong();
+    this.timeData.deserializeNBT(ByteBufUtils.readTag(buf));
   }
 
   @Override
   public void toBytes(ByteBuf buf) {
-    buf.writeLong(avg_temp_knowledge_start);
-    buf.writeLong(max_temp_knowledge_start);
+    ByteBufUtils.writeTag(buf,timeData.serializeNBT());
   }
 
   public static class Handler implements IMessageHandler<S2CSyncTimePacket, IMessage> {
@@ -43,8 +42,7 @@ public class S2CSyncTimePacket implements IMessage {
     }
 
     private void handle(S2CSyncTimePacket message, MessageContext ctx) {
-      TooltipHandler.avg_temp_knowledge_start = message.avg_temp_knowledge_start;
-      TooltipHandler.max_temp_knowledge_start = message.max_temp_knowledge_start;
+      TooltipHandler.timeData.deserializeNBT(message.timeData.serializeNBT());
     }
   }
 }

@@ -14,6 +14,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -87,17 +88,16 @@ public class SlimeCompassItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         double dist = Double.MAX_VALUE;
-        BlockPos playerPos = playerIn.getPosition();
+        ChunkPos playerPos = new ChunkPos(playerIn.getPosition());
         BlockPos chunkPos = null;
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         if (!worldIn.isRemote) {
             for (int i = -7; i < 8; i++) {
                 for (int j = -1; j < 8; j++) {
-                    mutable.setPos(playerPos.getX() << 4, 64, playerPos.getZ() << 4);
-                    if (BlockUtils.isSlimeChunk(worldIn, mutable)) {
-                        if (chunkPos == null || mutable.distanceSq(playerPos) < dist) {
-                            dist = mutable.distanceSq(playerPos);
-                            chunkPos = mutable.toImmutable();
+                    ChunkPos pos = new ChunkPos(playerPos.x + i,playerPos.z + j);
+                    if (BlockUtils.isSlimeChunk(worldIn, pos.getBlock(7,7,7))) {
+                        if (chunkPos == null || pos.getBlock(7,7,7).distanceSq(playerIn.getPosition()) < dist) {
+                            dist = pos.getBlock(7,7,7).distanceSq(playerIn.getPosition());
+                            chunkPos = pos.getBlock(7,7,7);
                         }
                     }
                 }
