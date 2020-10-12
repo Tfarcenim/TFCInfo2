@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Logger;
 import tfar.tfcinfo.command.ModCommand;
@@ -19,14 +20,18 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mod(modid = TerrafirmaCraftInfo.MODID, name = TerrafirmaCraftInfo.NAME, version = TerrafirmaCraftInfo.VERSION,
-        dependencies = "")
+        dependencies = "required:gamestages")
 @Mod.EventBusSubscriber
 public class TerrafirmaCraftInfo {
     public static final String MODID = "tfcinfo";
     public static final String NAME = "Terrafirmacraft Info";
     public static final String VERSION = "@VERSION@";
 
-    private static Logger logger;
+    public static TerrafirmaCraftInfo INSTANCE;
+
+    public TerrafirmaCraftInfo() {
+        INSTANCE = this;
+    }
 
     @EventHandler
     public void common(FMLInitializationEvent e) {
@@ -34,22 +39,24 @@ public class TerrafirmaCraftInfo {
         registerHolding();
         registerUnlockTriggers();
         registerKnowledgeHolding();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this,new GuiHandler());
     }
 
     //these show debug items directly
     public static void registerHolding() {
         registerOres(Stages.moonPhase.base(),ModItems.ALMANAC,ModItems.MOON_CHART,ModItems.NAVIGATOR_BUNDLE,ModItems.PDA);
+        registerOres(Stages.biome.base(),ModItems.PDA);
         registerOres(Stages.time.base(),ModItems.NAVIGATOR_BUNDLE,ModItems.TIME_BUNDLE,ModItems.PDA);
         registerOres(Stages.date.base(),ModItems.CALENDAR,ModItems.NAVIGATOR_BUNDLE,ModItems.TIME_BUNDLE,ModItems.PDA);
-        registerOres(Stages.rainfall.base(),ModItems.RANGER_BUNDLE,ModItems.PIONEER_GEAR,ModItems.PDA);
-        registerOres(Stages.averageTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE,ModItems.TRAILBLAZER_GEAR,ModItems.PDA);
-        registerOres(Stages.maxTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE,ModItems.PDA);
-        registerOres(Stages.minTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE,ModItems.PDA);
-        registerOres(Stages.slimeChunk.base(),ModItems.RANGER_BUNDLE,ModItems.ENHANCED_RANGER_BUNDLE,ModItems.SLIME_SAMPLE,ModItems.PDA);
-        registerOres(Stages.monsterMigration.base(),ModItems.RANGER_BUNDLE,ModItems.PDA);
-        registerOres(Stages.monsterFerocity.base(),ModItems.ENHANCED_RANGER_BUNDLE,ModItems.PDA);
+        registerOres(Stages.rainfall.base(),ModItems.RANGER_BUNDLE,ModItems.PIONEER_GEAR,ModItems.CLIMATE_CHART,ModItems.SURVIVAL_GUIDE,ModItems.PDA);
+        registerOres(Stages.averageTemp.base(),ModItems.CLIMATE_CHART,ModItems.ENHANCED_TEMPERATURE_BUNDLE,ModItems.TRAILBLAZER_GEAR,ModItems.ENCYCLOPEDIA,ModItems.PDA);
+        registerOres(Stages.maxTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE,ModItems.CLIMATE_CHART,ModItems.PDA);
+        registerOres(Stages.minTemp.base(),ModItems.ENHANCED_TEMPERATURE_BUNDLE,ModItems.CLIMATE_CHART,ModItems.PDA);
+        registerOres(Stages.slimeChunk.base(),ModItems.RANGER_BUNDLE,ModItems.ENHANCED_RANGER_BUNDLE,ModItems.SLIME_SAMPLE,ModItems.SLIME_COMPASS,ModItems.PDA);
+        registerOres(Stages.spawnProtectionTimer.base(),ModItems.RANGER_BUNDLE,ModItems.PDA);
+        registerOres(Stages.localDifficulty.base(),ModItems.ENHANCED_RANGER_BUNDLE,ModItems.PDA);
         registerOres(Stages.facing.base(), Items.COMPASS,ModItems.ENHANCED_SPACE_BUNDLE,ModItems.PDA);
-        registerOres(Stages.hwyla.base(),ModItems.PDA,ModItems.SURVIVAL_GUIDE,ModItems.PDA);
+        registerOres(Stages.hwyla.base(),ModItems.SURVIVAL_GUIDE,ModItems.PDA);
         List<Item> lamps = new ArrayList<>();
         for (Item item : Item.REGISTRY) {
             if (item instanceof ItemBlockMetalLamp) {
@@ -58,7 +65,16 @@ public class TerrafirmaCraftInfo {
         }
         lamps.add(ModItems.PDA);
         registerOres(Stages.lightLevel.base(),lamps.toArray(new Item[0]));
-        registerOres(Stages.monsterMigration.base(),ModItems.ENHANCED_TIME_BUNDLE,ModItems.PDA);
+        registerOres(Stages.spawnProtectionTimer.base(),ModItems.ENHANCED_TIME_BUNDLE,ModItems.PDA);
+
+        //x
+        registerOres(Stages.longitudinal.base(),ModItems.WORLD_MAP,ModItems.PDA);
+
+        //x
+        registerOres(Stages.depth.base(),ModItems.PDA);
+
+        //z
+        registerOres(Stages.constellation.base(),ModItems.WORLD_MAP,ModItems.PDA);
     }
 
     //picking these up for the first time starts knowledge timer
@@ -83,8 +99,9 @@ public class TerrafirmaCraftInfo {
             }
         }
         registerOres(Stages.rainfall.unlocksKnowledge(),empty_buckets.toArray(new Item[0]));
-        registerOres(Stages.monsterFerocity.unlocksKnowledge(),ModItems.MONSTER_FEROCITY_SAMPLE);
-        registerOres(Stages.monsterMigration.unlocksKnowledge(),ModItems.MONSTER_MIGRATION_SAMPLE);
+        registerOres(Stages.localDifficulty.unlocksKnowledge(),ModItems.MONSTER_FEROCITY_SAMPLE);
+        registerOres(Stages.spawnProtectionTimer.unlocksKnowledge(),ModItems.MONSTER_MIGRATION_SAMPLE);
+        registerOres(Stages.hwyla.unlocksKnowledge(),ModItems.SURVIVAL_GUIDE,ModItems.TWENTY_FOURS_SURVIVAL_GUIDE,ModItems.ENCYCLOPEDIA,ModItems.PDA);
 
     }
 
@@ -94,7 +111,7 @@ public class TerrafirmaCraftInfo {
         registerOres(Stages.maxTemp.knowledge(),ModItems.RECENT_TEMPERATURE_RECORDS,ModItems.TEMPERATURE_BUNDLE,ModItems.PIONEER_GEAR);
         registerOres(Stages.minTemp.knowledge(),ModItems.RECENT_TEMPERATURE_RECORDS,ModItems.TEMPERATURE_BUNDLE,ModItems.PIONEER_GEAR);
 
-        registerOres(Stages.monsterMigration.knowledge(),ModItems.MONSTER_MIGRATION_SAMPLE,ModItems.RANGER_BUNDLE,ModItems.ENHANCED_RANGER_BUNDLE);
+        registerOres(Stages.spawnProtectionTimer.knowledge(),ModItems.MONSTER_MIGRATION_SAMPLE,ModItems.RANGER_BUNDLE,ModItems.ENHANCED_RANGER_BUNDLE);
 
         registerOres(Stages.time.knowledge(),ModItems.NAVIGATOR_BUNDLE);
 
@@ -121,7 +138,6 @@ public class TerrafirmaCraftInfo {
 
     @EventHandler
     public void serverStart(FMLServerStartingEvent e) {
-        e.getServer().getWorld(0).getGameRules().setOrCreateGameRule("reducedDebugInfo", String.valueOf(true));
         e.registerServerCommand(new ModCommand());
     }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " b ",
+    "pms"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:writable_book"
+    },
+    "p": {
+      "item": "tfcinfo:pioneer_gear"
+    },
+    "m": {
+      "item": "tfc:metal/sheet/steel"
+    },
+    "s": {
+      "item": "tfcinfo:space_time_gear"
+    }
+  },
+  "result": {
+    "item": "tfcinfo:survival_guide"
+  }
+}

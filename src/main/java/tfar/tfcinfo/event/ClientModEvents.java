@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import tfar.tfcinfo.ModItems;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,21 +19,18 @@ public class ClientModEvents {
 
 	@SubscribeEvent
 	public static void models(ModelRegistryEvent e) {
-		registerItemModels(ModItems.items);
-		registerItemModel(ModItems.SLIME_COMPASS);
-		registerItemModel(ModItems.SLIME_SAMPLE);
-	}
+		Field[] fields = ModItems.class.getFields();
 
-
-	public static void registerItemModels(List<Item> items) {
-		items.forEach(ClientModEvents::registerItemModel);
+		for (Field field : fields) {
+			try {
+				registerItemModel((Item) field.get(null));
+			} catch (IllegalAccessException illegalAccessException) {
+				illegalAccessException.printStackTrace();
+			}
+		}
 	}
 
 	public static void registerItemModel(Item item) {
 		ModelLoader.setCustomModelResourceLocation(item,0,new ModelResourceLocation(item.getRegistryName(), "inventory"));
-	}
-
-	public static void registerItemModel(Block block) {
-		registerItemModel(Item.getItemFromBlock(block));
 	}
 }

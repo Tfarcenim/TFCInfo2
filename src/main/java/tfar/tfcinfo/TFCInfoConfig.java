@@ -72,7 +72,7 @@ public class TFCInfoConfig {
 	public static double date_memory_requirement = 96 * ticksToDays;
 
 	@Config.Name("Flora Memorization "+s)
-	public static double flora_memory_requirement = 96 * ticksToDays;
+	public static double flora_memory_requirement = 8 * ticksToDays;
 
 
 	@Config.Name("Longitudinal memorization "+s)
@@ -110,8 +110,18 @@ public class TFCInfoConfig {
 	@Config.Name("Nutrition Memorization "+s)
 	@Config.Comment("Required to display Nutrition tab")
 	public static double nutrition_memory_requirement = 24 * ticksToDays;
+
+	@Config.Name("Time Memorization "+s)
+	@Config.Comment("Required to display Time")
 	public static double time_memory_requirement = 192 * ticksToDays;
 
+	@Config.Name("Hwyla Memorization "+s)
+	@Config.Comment("Required to display Hwyla info")
+	public static double hwyla_memory_requirement = 96 * ticksToDays;
+
+	@Config.Name("Skill Memorization "+s)
+	@Config.Comment("Required to display Skill tab")
+	public static double skill_memory_requirement = 96 * ticksToDays;
 
 	//fields
 

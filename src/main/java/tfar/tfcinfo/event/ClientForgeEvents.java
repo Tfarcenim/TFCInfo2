@@ -2,6 +2,8 @@ package tfar.tfcinfo.event;
 
 import net.darkhax.bookshelf.data.MoonPhase;
 import net.darkhax.gamestages.GameStageHelper;
+import net.dries007.tfc.TerraFirmaCraft;
+import net.dries007.tfc.api.types.Tree;
 import net.dries007.tfc.client.TFCGuiHandler;
 import net.dries007.tfc.client.button.GuiButtonPlayerInventoryTab;
 import net.dries007.tfc.util.calendar.CalendarTFC;
@@ -44,11 +46,16 @@ public class ClientForgeEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void lessDebugInfo(RenderGameOverlayEvent.Text e) {
 
+
         EntityPlayer player = Minecraft.getMinecraft().player;
         List<String> left = e.getLeft();
         List<String> right = e.getRight();
 
-        //remove first
+        if (left.isEmpty()) {
+            return;
+        }
+
+            //remove first
         deleteLeftLines(left, player);
 
         //then add new lines
@@ -86,12 +93,7 @@ public class ClientForgeEvents {
                 if (ClientHelper.canDisplayDate(player)) {
                     s1 = getDate();
                 }
-                //list.add(I18n.format("tfc.tooltip.debug_times", CalendarTFC.PLAYER_TIME.getTicks(), CalendarTFC.CALENDAR_TIME.getTicks()));
                 right.set(i, s1);
-
-                if (ClientHelper.canDisplayTime(player)) {
-                    right.add(i, getTime());
-                }
             }
         }
     }
@@ -105,13 +107,15 @@ public class ClientForgeEvents {
                 e.setCanceled(true);
             } else if (tab.getGuiType() == TFCGuiHandler.Type.NUTRITION && !ClientHelper.canDisplayNutrition(Minecraft.getMinecraft().player)) {
                 e.setCanceled(true);
+            } else if (tab.getGuiType() == TFCGuiHandler.Type.SKILLS && !ClientHelper.canDisplaySkills(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
             }
         }
     }
 
     public static void deleteLeftLines(List<String> left, EntityPlayer player) {
         left.removeIf(s -> {
-            if (s.contains("Light")) {
+            if (s.toLowerCase().contains("light")) {
                 return !ClientHelper.canDisplayLightLevel(player);
             } else if (s.contains("Biome")) {
                 return !ClientHelper.canDisplayBiome(player);
@@ -162,9 +166,6 @@ public class ClientForgeEvents {
         if (ClientHelper.canDisplaySlimeChunks(player)) {
             left.add("Slime Chunk: " + TooltipHandler.slime_chunk);
         }
-        if (ClientHelper.canDisplayLightLevel(player)) {
-            left.add("Light Level:");
-        }
         if (ClientHelper.canDisplaySpawnProtectionTimer(player)) {
             ChunkDataTFC data = ChunkDataTFC.get(player.world, player.getPosition());
             left.add("Spawn Protection: " + data.getSpawnProtection());
@@ -177,7 +178,7 @@ public class ClientForgeEvents {
                 return !ClientHelper.canDisplayRainfall(player);
             }
 
-            return s.startsWith("Region") || s.startsWith("CPU") || s.startsWith("Display") || s.contains(GlStateManager.glGetString(7936)) ||
+            return s.contains("Optifine") || s.contains("Region") || s.startsWith("CPU") || s.startsWith("Display") || s.contains(GlStateManager.glGetString(7936)) ||
                     s.contains(GlStateManager.glGetString(7937)) || s.contains(GlStateManager.glGetString(7938)) || s.contains("Temp");
 
         });
@@ -191,9 +192,6 @@ public class ClientForgeEvents {
             ChunkDataTFC data = chunk.getCapability(ChunkDataProvider.CHUNK_DATA_CAPABILITY, null);
 
             List<String> tempStrings = new ArrayList<>();
-            if (ClientHelper.canDisplayRegionalTemp(TooltipHandler.mc.player)) {
-                tempStrings.add(String.format("%sRegion: %s%.1f\u00b0C%s", GRAY, WHITE, data.getRegionalTemp(), GRAY));
-            }
 
             if (ClientHelper.canDisplayAverageTemp(TooltipHandler.mc.player)) {
                 tempStrings.add(String.format("Avg: %s%.1f\u00b0C%s", WHITE, data.getAverageTemp(), GRAY));
@@ -204,13 +202,31 @@ public class ClientForgeEvents {
                         WHITE, ClimateHelper.monthFactor(data.getRegionalTemp(), Month.JULY.getTemperatureModifier(), blockpos.getZ()), GRAY));
             }
 
+
+
             if (ClientHelper.canDisplayMinTemp(TooltipHandler.mc.player)) {
                 tempStrings.add(String.format("C%s Min: %s%.1f\u00b0C%s", GRAY,
                         WHITE, ClimateHelper.monthFactor(data.getRegionalTemp(), Month.JANUARY.getTemperatureModifier(), blockpos.getZ()), GRAY));
             }
             if (!tempStrings.isEmpty()) {
-                right.add("Tempterature");
+                right.add("Temperature");
                 right.addAll(tempStrings);
+            }
+
+            if (ClientHelper.canDisplayTime(player)) {
+                right.add(getTime());
+            }
+
+            if (ClientHelper.canDisplayFlora(TooltipHandler.mc.player)) {
+                right.add("Flora Density: "+data.getFloraDensity());
+                right.add("Flora Diversity: "+data.getFloraDiversity());
+            }
+
+            if (ClientHelper.canDisplayArboreal(player)) {
+                right.add("Trees");
+                for (Tree tree : data.getValidTrees()) {
+                    right.add(tree.getRegistryName().toString());
+                }
             }
         }
     }
@@ -227,7 +243,8 @@ public class ClientForgeEvents {
     public static String getTime() {
         ICalendarFormatted iCalendarFormatted = CalendarTFC.CALENDAR_TIME;
         long time = iCalendarFormatted.getTicks();
-        return "Time: " + getHourOfDay(time) + ":" + getMinuteOfHour(time);
+        int minute = getMinuteOfHour(time);
+        return "Time: " + getHourOfDay(time) + ":" + (minute < 10 ? "0" : "") + minute;
     }
 
     @SubscribeEvent
@@ -241,7 +258,7 @@ public class ClientForgeEvents {
 
 
     public static boolean hasMemoryOrKnowledge(EntityPlayer player, KnowledgeMemoryPair pair) {
-        return GameStageHelper.hasStage(player, pair.memory()) || hasItemWithKnowledge(player, pair.knowledge());
+        return GameStageHelper.hasStage(player, pair.memory()) || hasItemWithKnowledge(player, pair.knowledge()) || Utils.hasOreDictItem(pair.base(),player.inventory);
     }
 
     public static boolean hasItemWithKnowledge(EntityPlayer player, String stage) {

@@ -9,7 +9,7 @@ import tfar.tfcinfo.event.ClientHelper;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class HywlaIntegration {
+public class HwylaIntegration {
 
     @SubscribeEvent
     public static void hwyla(WailaTooltipEvent e) {

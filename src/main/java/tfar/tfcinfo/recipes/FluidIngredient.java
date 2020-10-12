@@ -5,6 +5,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class FluidIngredient extends Ingredient {
         this.fluid = fluidStack;
     }
 
+    @Nonnull
     @Override
     public ItemStack[] getMatchingStacks() {
         if (cachedStacks == null) {

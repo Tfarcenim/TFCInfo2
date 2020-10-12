@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:survival_guide"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:24s_survival_guide"
+  }
+}

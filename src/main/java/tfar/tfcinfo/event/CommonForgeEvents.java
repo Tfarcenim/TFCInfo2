@@ -51,7 +51,7 @@ public class CommonForgeEvents {
 
     public static void checkKnowledgeMemoryUnlocks(EntityPlayer player, TimeData timeData) {
         if (timeData.avg_temp_knowledge_start > -1) {
-            unlockAverageTempKnowledge(player, timeData);
+            checkAverageTempKnowledge(player, timeData);
         }
 
         if (timeData.max_temp_knowledge_start > -1) {
@@ -90,9 +90,16 @@ public class CommonForgeEvents {
             checkTimeProgress(player, timeData);
         }
 
+        if (timeData.hwyla_knowledge_start > -1) {
+            checkHwylaProgress(player, timeData);
+        }
+
         //these checks aren't tied to items
         checkMonsterFerocityProgress(player, timeData);
         checkNutritionProgress(player,timeData);
+        checkSkillProgress(player,timeData);
+        checkFloraProgress(player, timeData);
+        checkArborealProgress(player, timeData);
     }
 
     public static boolean checkTriggers(EntityPlayer player,TimeData timeData) {
@@ -146,7 +153,7 @@ public class CommonForgeEvents {
             }
         }
 
-        if (Utils.hasOreDictItem(Stages.monsterMigration.unlocksKnowledge(),player.inventory)) {
+        if (Utils.hasOreDictItem(Stages.spawnProtectionTimer.unlocksKnowledge(),player.inventory)) {
             if (timeData.monster_migration_knowledge_start == -1) {
                 timeData.monster_migration_knowledge_start = player.world.getTotalWorldTime();
                 dirty = true;
@@ -167,6 +174,13 @@ public class CommonForgeEvents {
             }
         }
 
+        if (Utils.hasOreDictItem(Stages.hwyla.unlocksKnowledge(),player.inventory)) {
+            if (timeData.hwyla_knowledge_start == -1) {
+                timeData.hwyla_knowledge_start = player.world.getTotalWorldTime();
+                dirty = true;
+            }
+        }
+
         //note: monster ferocity doesn't require an item to unlock
         if (timeData.monster_ferocity_knowledge_start == -1) {
             timeData.monster_ferocity_knowledge_start = player.world.getTotalWorldTime();
@@ -174,6 +188,18 @@ public class CommonForgeEvents {
         }
         if (timeData.nutrition_knowledge_start == -1) {
             timeData.nutrition_knowledge_start = player.world.getTotalWorldTime();
+            dirty = true;
+        }
+        if (timeData.skill_knowledge_start == -1) {
+            timeData.skill_knowledge_start = player.world.getTotalWorldTime();
+            dirty = true;
+        }
+        if (timeData.flora_knowledge_start == -1) {
+            timeData.flora_knowledge_start = player.world.getTotalWorldTime();
+            dirty = true;
+        }
+        if (timeData.arboreal_knowledge_start == -1) {
+            timeData.arboreal_knowledge_start = player.world.getTotalWorldTime();
             dirty = true;
         }
         return dirty;
@@ -190,7 +216,7 @@ public class CommonForgeEvents {
 
 
     //days minutes seconds ticks
-    public static void unlockAverageTempKnowledge(EntityPlayer player, TimeData timeData) {
+    public static void checkAverageTempKnowledge(EntityPlayer player, TimeData timeData) {
         long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.avg_temp_knowledge_start;
         if (diff > TFCInfoConfig.avg_temp_knowledge_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.averageTemp.knowledge())) {
             GameStageHelper.addStage(player, Stages.averageTemp.knowledge());
@@ -271,30 +297,30 @@ public class CommonForgeEvents {
 
     public static void checkMonsterFerocityProgress(EntityPlayer player, TimeData timeData) {
         long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.monster_ferocity_knowledge_start;
-        if (diff > TFCInfoConfig.monster_ferocity_knowledge_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.monsterFerocity.knowledge())) {
-            GameStageHelper.addStage(player, Stages.monsterFerocity.knowledge());
+        if (diff > TFCInfoConfig.monster_ferocity_knowledge_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.localDifficulty.knowledge())) {
+            GameStageHelper.addStage(player, Stages.localDifficulty.knowledge());
         }
 
-        if (diff > TFCInfoConfig.monster_ferocity_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.monsterFerocity.memory())) {
-            GameStageHelper.addStage(player, Stages.monsterFerocity.memory());
+        if (diff > TFCInfoConfig.monster_ferocity_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.localDifficulty.memory())) {
+            GameStageHelper.addStage(player, Stages.localDifficulty.memory());
         }
     }
 
     public static void checkSpawnProtectionProgress(EntityPlayer player, TimeData timeData) {
         long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.monster_migration_knowledge_start;
-        if (diff > TFCInfoConfig.monster_migration_knowledge_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.monsterMigration.knowledge())) {
-            GameStageHelper.addStage(player, Stages.monsterMigration.knowledge());
+        if (diff > TFCInfoConfig.monster_migration_knowledge_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.spawnProtectionTimer.knowledge())) {
+            GameStageHelper.addStage(player, Stages.spawnProtectionTimer.knowledge());
         }
 
-        if (diff > TFCInfoConfig.monster_migration_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.monsterMigration.memory())) {
-            GameStageHelper.addStage(player, Stages.monsterMigration.memory());
+        if (diff > TFCInfoConfig.monster_migration_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.spawnProtectionTimer.memory())) {
+            GameStageHelper.addStage(player, Stages.spawnProtectionTimer.memory());
         }
     }
 
     public static void checkNutritionProgress(EntityPlayer player, TimeData timeData) {
         long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.nutrition_knowledge_start;
-        if (diff > TFCInfoConfig.nutrition_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.nutrition.knowledge())) {
-            GameStageHelper.addStage(player, Stages.nutrition.knowledge());
+        if (diff > TFCInfoConfig.nutrition_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.nutrition.memory())) {
+            GameStageHelper.addStage(player, Stages.nutrition.memory());
         }
     }
 
@@ -309,6 +335,34 @@ public class CommonForgeEvents {
         long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.time_knowledge_start;
         if (diff > TFCInfoConfig.time_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.time.knowledge())) {
             GameStageHelper.addStage(player, Stages.time.memory());
+        }
+    }
+
+    public static void checkHwylaProgress(EntityPlayer player, TimeData timeData) {
+        long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.hwyla_knowledge_start;
+        if (diff > TFCInfoConfig.hwyla_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.hwyla.knowledge())) {
+            GameStageHelper.addStage(player, Stages.hwyla.memory());
+        }
+    }
+
+    public static void checkSkillProgress(EntityPlayer player, TimeData timeData) {
+        long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.skill_knowledge_start;
+        if (diff > TFCInfoConfig.skill_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.skills.memory())) {
+            GameStageHelper.addStage(player, Stages.skills.memory());
+        }
+    }
+
+    public static void checkFloraProgress(EntityPlayer player, TimeData timeData) {
+        long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.flora_knowledge_start;
+        if (diff > TFCInfoConfig.flora_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.flora.memory())) {
+            GameStageHelper.addStage(player, Stages.flora.memory());
+        }
+    }
+
+    public static void checkArborealProgress(EntityPlayer player, TimeData timeData) {
+        long diff = player.world.getWorldInfo().getWorldTotalTime() - timeData.arboreal_knowledge_start;
+        if (diff > TFCInfoConfig.arboreal_memory_requirement && !GameStageHelper.hasStage(player, GameStageHelper.getPlayerData(player), Stages.arboreal.memory())) {
+            GameStageHelper.addStage(player, Stages.arboreal.memory());
         }
     }
 }

@@ -5,14 +5,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
+import tfar.tfcinfo.item.ShowConfigItem;
 import tfar.tfcinfo.item.SlimeCompassItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModItems {
-
-    public static final List<Item> items = new ArrayList<>();
 
     static final CreativeTabs tab = new CreativeTabs(TerrafirmaCraftInfo.MODID) {
         @Override
@@ -41,18 +40,19 @@ public class ModItems {
     public static Item TIME_BUNDLE = create();
     public static Item ENHANCED_TIME_BUNDLE = create();
     public static Item TRAILBLAZER_GEAR = create();
-    public static Item PDA = create();
+    public static Item PDA = new ShowConfigItem().setCreativeTab(tab);
     public static Item SPACE_TIME_GEAR = create();
     public static Item FOURD_GEAR = create();
     public static Item SURVIVAL_GUIDE = create();
-
+    public static Item TWENTY_FOURS_SURVIVAL_GUIDE = create();
+    public static Item CLIMATE_CHART = create();
+    public static Item ENCYCLOPEDIA = new ShowConfigItem().setCreativeTab(tab);
+    public static Item WORLD_MAP = create();
 
     public static Item SLIME_COMPASS = new SlimeCompassItem().setCreativeTab(tab);
 
     public static Item create() {
-        Item item = new Item().setCreativeTab(tab);
-        items.add(item);
-        return item;
+        return new Item().setCreativeTab(tab);
     }
 
     public static void registerItems(RegistryEvent.Register<Item> e) {
@@ -81,8 +81,12 @@ public class ModItems {
                 TRAILBLAZER_GEAR.setRegistryName("trailblazer_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".trailblazer_gear"),
                 PDA.setRegistryName("pda").setTranslationKey(TerrafirmaCraftInfo.MODID + ".pda"),
                 SURVIVAL_GUIDE.setRegistryName("survival_guide").setTranslationKey(TerrafirmaCraftInfo.MODID + ".survival_guide"),
+                TWENTY_FOURS_SURVIVAL_GUIDE.setRegistryName("24s_survival_guide").setTranslationKey(TerrafirmaCraftInfo.MODID + ".24s_survival_guide"),
                 SPACE_TIME_GEAR.setRegistryName("space_time_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".space_time_gear"),
-                FOURD_GEAR.setRegistryName("4d_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".4d_gear")
+                FOURD_GEAR.setRegistryName("4d_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".4d_gear"),
+                CLIMATE_CHART.setRegistryName("climate_chart").setTranslationKey(TerrafirmaCraftInfo.MODID + ".climate_chart"),
+                ENCYCLOPEDIA.setRegistryName("encyclopedia").setContainerItem(ENCYCLOPEDIA).setTranslationKey(TerrafirmaCraftInfo.MODID + ".encyclopedia"),
+                WORLD_MAP.setRegistryName("world_map").setTranslationKey(TerrafirmaCraftInfo.MODID + ".world_map")
         );
     }
 }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "gag"
+  ],
+  "key": {
+    "a": [
+      {
+        "item": "minecraft:compass"
+      }
+    ],
+    "g": {
+        "type": "forge:ore_dict",
+        "ore": "gemExquisite"
+      },
+    "s": {
+      "item": "tfcinfo:slime_sample"
+    }
+  },
+  "result": {
+    "item": "tfcinfo:slime_compass"
+  }
+}

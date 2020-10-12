@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " b ",
+    "pms"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:writable_book"
+    },
+    "p": {
+      "item": "tfcinfo:trailblazer_gear"
+    },
+    "m": {
+      "item": "tfc:metal/sheet/black_steel"
+    },
+    "s": {
+      "item": "tfcinfo:4d_gear"
+    }
+  },
+  "result": {
+    "item": "tfcinfo:encyclopedia"
+  }
+}

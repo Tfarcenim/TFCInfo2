@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "bdb",
+    "geg",
+    "srs"
+  ],
+  "key": {
+    "b": {
+      "item": "tfc:metal/sheet/blue_steel"
+    },
+    "g": {
+      "item": "minecraft:glass"
+    },
+    "d": [
+      {
+        "item": "tfcinfo:survival_guide"
+      },
+      {
+        "item": "tfcinfo:24s_survival_guide"
+      }
+    ],
+    "e": {
+      "item": "tfcinfo:encyclopedia"
+    },
+    "p": {
+      "item": "tfcinfo:trailblazer_gear"
+    },
+    "s": {
+        "item": "tfc:metal/sheet/red_steel"
+    }
+  },
+  "result": {
+    "item": "tfcinfo:encyclopedia"
+  }
+}

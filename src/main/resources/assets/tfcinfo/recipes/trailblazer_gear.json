@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:enhanced_ranger_bundle"
+    },
+    {
+      "item": "tfcinfo:enhanced_temperature_bundle"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:trailblazer_gear"
+  }
+}

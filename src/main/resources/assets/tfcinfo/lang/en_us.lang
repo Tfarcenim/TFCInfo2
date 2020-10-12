@@ -1,11 +1,26 @@
+item.tfcinfo.4d_gear.name=4D Gear
+item.tfcinfo.almanac.name=Almanac
 item.tfcinfo.calendar.name=Calendar
+item.tfcinfo.enhanced_ranger_bundle.name=Enhanced Ranger Bundle
+item.tfcinfo.enhanced_space_bundle.name=Enhanced Space Bundle
+item.tfcinfo.enhanced_temperature_bundle.name=Enhanced Temperature Bundle
+item.tfcinfo.enhanced_time_bundle.name=Enhanced Time Bundle
+item.tfcinfo.monster_ferocity_sample.name=Monster Ferocity Sample
 item.tfcinfo.monster_migration_sample.name=Monster Migration Sample
+item.tfcinfo.navigator_bundle.name=Navigator Bundle
 item.tfcinfo.moon_chart.name=Moon Chart
 item.tfcinfo.pda.name=PDA
+item.tfcinfo.pioneer_gear.name=Pioneer Gear
 item.tfcinfo.plumb_bob.name=Plumb Bob
+item.tfcinfo.ranger_bundle.name=Ranger Bundle
 item.tfcinfo.recent_temperature_records.name=Recent Temperature Records
+item.tfcinfo.sextant.name=Sextant
 item.tfcinfo.slime_compass.name=Slime Compass
+item.tfcinfo.slime_sample.name=Slime Sample
+item.tfcinfo.space_bundle.name=Space Bundle
 item.tfcinfo.spirit_thermometer.name=Spirit Thermometer
 item.tfcinfo.survival_guide.name=Survival Guide
-
+item.tfcinfo.temperature_bundle.name=Temperature Bundle
+item.tfcinfo.time_bundle.name=Time Bundle
+item.tfcinfo.trailblazer_gear.name=Trailblazer Gear
 tfcinfo.tooltip.date=Date : %s %s, %s

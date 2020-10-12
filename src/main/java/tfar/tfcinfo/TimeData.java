@@ -3,6 +3,8 @@ package tfar.tfcinfo;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
+import java.lang.reflect.Field;
+
 public class TimeData implements INBTSerializable<NBTTagCompound> {
 
 	public long avg_temp_knowledge_start = -1;
@@ -20,41 +22,34 @@ public class TimeData implements INBTSerializable<NBTTagCompound> {
 	public long depth_knowledge_start = -1;
 	public long biome_knowledge_start = -1;
 	public long nutrition_knowledge_start = -1;
+	public long hwyla_knowledge_start = -1;
+	public long skill_knowledge_start = - 1;
+	public long flora_knowledge_start = -1;
+	public long arboreal_knowledge_start = -1;
 
+	protected static final Field[] fields = TimeData.class.getFields();
 
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbtTagCompound = new NBTTagCompound();
-		nbtTagCompound.setLong("avg_temp_knowledge_start", avg_temp_knowledge_start);
-		nbtTagCompound.setLong("max_temp_knowledge_start", max_temp_knowledge_start);
-		nbtTagCompound.setLong("min_temp_knowledge_start", min_temp_knowledge_start);
-		nbtTagCompound.setLong("rainfall_knowledge_start", rainfall_knowledge_start);
-		nbtTagCompound.setLong("monster_ferocity_knowledge_start",monster_ferocity_knowledge_start);
-		nbtTagCompound.setLong("monster_migration_knowledge_start",monster_migration_knowledge_start);
-		nbtTagCompound.setLong("longitudinal_knowledge_start",longitudinal_knowledge_start);
-		nbtTagCompound.setLong("depth_knowledge_start",depth_knowledge_start);
-		nbtTagCompound.setLong("constellation_knowledge_start",constellation_knowledge_start);
-		nbtTagCompound.setLong("time_knowledge_start",time_knowledge_start);
-		nbtTagCompound.setLong("date_knowledge_start", date_memory_start);
-		nbtTagCompound.setLong("biome_knowledge_start",biome_knowledge_start);
-		nbtTagCompound.setLong("nutrition_knowledge_start",nutrition_knowledge_start);
-			return nbtTagCompound;
+		for (Field field : fields) {
+			try {
+				nbtTagCompound.setLong(field.getName(), field.getLong(this));
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		return nbtTagCompound;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		avg_temp_knowledge_start = nbt.getLong("avg_temp_knowledge_start");
-		max_temp_knowledge_start = nbt.getLong("max_temp_knowledge_start");
-		min_temp_knowledge_start = nbt.getLong("min_temp_knowledge_start");
-		rainfall_knowledge_start = nbt.getLong("rainfall_knowledge_start");
-		monster_ferocity_knowledge_start = nbt.getLong("monster_ferocity_knowledge_start");
-		monster_migration_knowledge_start = nbt.getLong("monster_migration_knowledge_start");
-		longitudinal_knowledge_start = nbt.getLong("longitudinal_knowledge_start");
-		depth_knowledge_start = nbt.getLong("depth_knowledge_start");
-		constellation_knowledge_start = nbt.getLong("constellation_knowledge_start");
-		date_memory_start = nbt.getLong("date_knowledge_start");
-		time_knowledge_start = nbt.getLong("time_knowledge_start");
-		biome_knowledge_start = nbt.getLong("biome_knowledge_start");
-		nutrition_knowledge_start = nbt.getLong("nutrition_knowledge_start");
+		for (Field field : fields) {
+			try {
+				field.setLong(this,nbt.getLong(field.getName()));
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
