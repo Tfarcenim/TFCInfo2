@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shapeless",
+
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "lamp"
+    },
+    {
+      "item": "tfcinfo:monster_ferocity_sample"
+    },
+    {
+      "item": "tfcinfo:ranger_bundle"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:enhanced_ranger_bundle"
+  }
+}

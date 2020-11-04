@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "tfcinfo:spirit_thermometer"
+    },
+    {
+      "item": "tfc:wood/sapling/acacia"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:record_highs"
+  }
+}

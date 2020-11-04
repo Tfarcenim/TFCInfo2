@@ -2,7 +2,7 @@ package tfar.tfcinfo.command;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.server.command.CommandTreeBase;
-import tfar.tfcinfo.Stages;
+import tfar.tfcinfo.event.Stages;
 
 public class AddMemorizationCommand extends CommandTreeBase {
 

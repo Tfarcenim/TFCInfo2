@@ -23,14 +23,14 @@
     "e": {
       "item": "tfcinfo:encyclopedia"
     },
-    "p": {
-      "item": "tfcinfo:trailblazer_gear"
+    "r": {
+        "item": "minecraft:redstone_block"
     },
     "s": {
-        "item": "tfc:metal/sheet/red_steel"
+      "item": "tfc:metal/sheet/red_steel"
     }
   },
   "result": {
-    "item": "tfcinfo:encyclopedia"
+    "item": "tfcinfo:pda"
   }
 }

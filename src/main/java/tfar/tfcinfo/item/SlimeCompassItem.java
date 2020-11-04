@@ -1,6 +1,7 @@
 package tfar.tfcinfo.item;
 
 import net.darkhax.bookshelf.util.BlockUtils;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -16,11 +17,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class SlimeCompassItem extends Item {
 
@@ -60,7 +63,6 @@ public class SlimeCompassItem extends Item {
                 }
             }
 
-            @SideOnly(Side.CLIENT)
             private double wobble(World worldIn, double p_185093_2_) {
                 if (worldIn.getTotalWorldTime() != this.lastUpdateTick) {
                     this.lastUpdateTick = worldIn.getTotalWorldTime();
@@ -83,6 +85,11 @@ public class SlimeCompassItem extends Item {
                 return Math.atan2(pos[1] - p_185092_2_.posZ, pos[0] - p_185092_2_.posX);
             }
         });
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add("Right click to locate nearest slime chunk");
     }
 
     @Override

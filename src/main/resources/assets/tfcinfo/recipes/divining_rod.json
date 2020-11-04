@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dd",
+    "sd"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:dirt",
+      "data:" : 0
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "tfcinfo:divining_rod"
+  }
+}

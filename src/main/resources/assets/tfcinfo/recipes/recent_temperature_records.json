@@ -3,10 +3,10 @@
 
   "ingredients": [
     {
-      "item": "tfcinfo:calendar"
+      "item": "tfcinfo:record_highs"
     },
     {
-      "item": "tfcinfo:spirit_thermometer"
+      "item": "tfcinfo:record_lows"
     }
   ],
   "result": {

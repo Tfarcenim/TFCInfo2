@@ -29,11 +29,11 @@ public class TFCInfoConfig {
 	@Config.Name("Rainfall Knowledge "+s)
 	public static double rainfall_knowledge_requirement =  8 * ticksToDays;
 
-	@Config.Name("Monster Ferocity Knowledge "+s)
+	@Config.Name("Local Difficulty Knowledge "+s)
 	public static double monster_ferocity_knowledge_requirement =  3 * ticksToDays;
 
-	@Config.Name("Monster Migration Knowledge "+s)
-	public static double monster_migration_knowledge_requirement = 8 * ticksToDays;
+	@Config.Name("Spawn Protection Knowledge "+s)
+	public static double monster_migration_knowledge_requirement = 3 * ticksToDays;
 
 	@Config.Name("Longitudinal Knowledge "+s)
 	@Config.Comment("Required to display X coordinate")

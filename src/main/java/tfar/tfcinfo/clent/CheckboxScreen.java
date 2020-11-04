@@ -19,7 +19,7 @@ public class CheckboxScreen extends GuiScreen {
     /** Starting Y position for the Gui. Inconsistent use for Gui backgrounds. */
     protected int guiTop;
 
-    private static final ResourceLocation CRAFTING_TABLE_GUI_TEXTURES = new ResourceLocation("textures/gui/demo_background.png");
+    protected static final ResourceLocation CRAFTING_TABLE_GUI_TEXTURES = new ResourceLocation("textures/gui/demo_background.png");
 
     protected static final int spacing = 11;
 
@@ -40,30 +40,21 @@ public class CheckboxScreen extends GuiScreen {
 
     protected void drawForeground() {
         int xPos = guiLeft + 24;
-        int yPos = guiTop + 1;
+        int yPos = guiTop + 2;
 
+        this.fontRenderer.drawString("Current Temp", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Average Temp", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Max Temp", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Min Temp", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Rainfall", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Local Difficulty", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Spawn protection Timer", xPos, yPos += spacing, 0x404040);
+        this.fontRenderer.drawString("Spawn Protection Timer", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Date", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Time", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Biome", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Moon Phase", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Slime Chunks", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Light Level", xPos, yPos += spacing, 0x404040);
-
-        xPos += 135;
-        yPos = guiTop;
 
         this.fontRenderer.drawString("X Position", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Y Position", xPos, yPos += spacing, 0x404040);
         this.fontRenderer.drawString("Z Position", xPos, yPos += spacing, 0x404040);
 
-        this.fontRenderer.drawString("Flora", xPos, yPos += spacing, 0x404040);
-        this.fontRenderer.drawString("Trees", xPos, yPos += spacing, 0x404040);
 
     }
 
@@ -79,7 +70,7 @@ public class CheckboxScreen extends GuiScreen {
         this.guiTop = (this.height - this.ySize) / 2;
         int xPos = guiLeft + 10;
         int yPos = guiTop;
-        for (int i = 0; i < TFCInfoClientConfig.class.getFields().length;i++) {
+        for (int i = 0; i < TFCInfoClientConfig.class.getFields().length - 7;i++) {
 
             if (i > 0 && i % 12 == 0) {
                 xPos += 135;

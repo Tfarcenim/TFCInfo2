@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shapeless",
+
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "bucket"
+    },
+    {
+      "item": "tfcinfo:slime_sample"
+    },
+    {
+      "item": "tfcinfo:monster_migration_sample"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:ranger_bundle"
+  }
+}

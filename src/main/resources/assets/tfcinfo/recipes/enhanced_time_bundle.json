@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:time_bundle"
+    },
+    {
+      "item": "tfcinfo:moon_chart"
+    },
+    {
+      "item": "tfcinfo:monster_migration_sample"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:enhanced_time_bundle"
+  }
+}

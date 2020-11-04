@@ -1,6 +1,5 @@
 package tfar.tfcinfo.event;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -11,8 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import tfar.tfcinfo.ModItems;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientModEvents {

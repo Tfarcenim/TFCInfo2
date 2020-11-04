@@ -4,10 +4,20 @@
     {
       "item": "minecraft:glass_bottle"
     },
-    {
-      "type": "forge:ore_dict",
-      "ore": "dye"
-    },
+    [
+      {
+        "item": "minecraft:dye",
+        "data" : 1
+      },
+      {
+        "item": "minecraft:dye",
+        "data" : 2
+      },
+      {
+        "item": "minecraft:dye",
+        "data" : 4
+      }
+    ],
     {
       "type": "tfcinfo:spirits"
     }

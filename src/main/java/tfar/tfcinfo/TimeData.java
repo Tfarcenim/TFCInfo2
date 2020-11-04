@@ -17,7 +17,7 @@ public class TimeData implements INBTSerializable<NBTTagCompound> {
 	public long date_memory_start = -1;
 	public long time_knowledge_start = -1;
 
-	public long longitudinal_knowledge_start;
+	public long longitudinal_knowledge_start = -1;
 	public long constellation_knowledge_start = -1;
 	public long depth_knowledge_start = -1;
 	public long biome_knowledge_start = -1;

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:enhanced_space_bundle"
+    },
+    {
+      "item": "tfcinfo:enhanced_time_bundle"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:4d_gear"
+  }
+}

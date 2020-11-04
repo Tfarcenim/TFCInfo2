@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    {
+      "item": "tfcinfo:recent_temperature_records"
+    },
+    {
+      "item": "tfcinfo:arboreal_sample"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:enhanced_temperature_bundle"
+  }
+}

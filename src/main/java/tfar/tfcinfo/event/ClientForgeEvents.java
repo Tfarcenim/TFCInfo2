@@ -2,7 +2,6 @@ package tfar.tfcinfo.event;
 
 import net.darkhax.bookshelf.data.MoonPhase;
 import net.darkhax.gamestages.GameStageHelper;
-import net.dries007.tfc.TerraFirmaCraft;
 import net.dries007.tfc.api.types.Tree;
 import net.dries007.tfc.client.TFCGuiHandler;
 import net.dries007.tfc.client.button.GuiButtonPlayerInventoryTab;
@@ -13,13 +12,13 @@ import net.dries007.tfc.util.climate.ClimateHelper;
 import net.dries007.tfc.world.classic.chunkdata.ChunkDataProvider;
 import net.dries007.tfc.world.classic.chunkdata.ChunkDataTFC;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -28,7 +27,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import tfar.tfcinfo.Stages;
 import tfar.tfcinfo.Utils;
 import tfar.tfcinfo.util.KnowledgeMemoryPair;
 
@@ -37,15 +35,13 @@ import java.util.List;
 import java.util.Locale;
 
 import static net.dries007.tfc.util.calendar.ICalendarFormatted.*;
-import static net.minecraft.util.text.TextFormatting.GRAY;
-import static net.minecraft.util.text.TextFormatting.WHITE;
+import static net.minecraft.util.text.TextFormatting.*;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientForgeEvents {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void lessDebugInfo(RenderGameOverlayEvent.Text e) {
-
 
         EntityPlayer player = Minecraft.getMinecraft().player;
         List<String> left = e.getLeft();
@@ -75,8 +71,8 @@ public class ClientForgeEvents {
             String s = left.get(i);
             if (s.contains("fps") && !s.contains("Minecraft")) continue;
 
-            if (s.contains("Local Difficulty")) {
-                String s1 = ClientHelper.canDisplayMonsterFerocity(player) ? s.split("\\(")[0] : "";
+            if (s.contains("Difficulty")) {
+                String s1 = ClientHelper.canDisplayLocalDifficulty(player) ? s.split("\\(")[0] : "";
                 left.set(i, s1);
             }
         }
@@ -99,16 +95,70 @@ public class ClientForgeEvents {
     }
 
     //disable calendar and nutrition tab
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST,receiveCanceled = true)
     public static void buttonClick(GuiScreenEvent.ActionPerformedEvent.Pre e) {
         if ((e.getButton() instanceof GuiButtonPlayerInventoryTab)) {
             GuiButtonPlayerInventoryTab tab = (GuiButtonPlayerInventoryTab) e.getButton();
-            if (tab.getGuiType() == TFCGuiHandler.Type.CALENDAR && !hasCalendarTab(Minecraft.getMinecraft().player)) {
+            System.out.println(tab.getGuiType());
+            if (tab.getGuiType() == TFCGuiHandler.Type.CALENDAR && !ClientHelper.hasCalendarTab(Minecraft.getMinecraft().player)) {
                 e.setCanceled(true);
-            } else if (tab.getGuiType() == TFCGuiHandler.Type.NUTRITION && !ClientHelper.canDisplayNutrition(Minecraft.getMinecraft().player)) {
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+                return;
+            }
+            if (tab.getGuiType() == TFCGuiHandler.Type.NUTRITION && !ClientHelper.canDisplayNutrition(Minecraft.getMinecraft().player)) {
                 e.setCanceled(true);
-            } else if (tab.getGuiType() == TFCGuiHandler.Type.SKILLS && !ClientHelper.canDisplaySkills(Minecraft.getMinecraft().player)) {
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+                return;
+            }
+            if (tab.getGuiType() == TFCGuiHandler.Type.SKILLS && !ClientHelper.canDisplaySkills(Minecraft.getMinecraft().player)) {
                 e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+            }
+        }
+    }
+
+    //disable calendar and nutrition tab
+    @SubscribeEvent(receiveCanceled = true)
+    public static void buttonClick1(GuiScreenEvent.ActionPerformedEvent.Pre e) {
+        if ((e.getButton() instanceof GuiButtonPlayerInventoryTab)) {
+            GuiButtonPlayerInventoryTab tab = (GuiButtonPlayerInventoryTab) e.getButton();
+            System.out.println(tab.getGuiType());
+            if (tab.getGuiType() == TFCGuiHandler.Type.CALENDAR && !ClientHelper.hasCalendarTab(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+                return;
+            }
+            if (tab.getGuiType() == TFCGuiHandler.Type.NUTRITION && !ClientHelper.canDisplayNutrition(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+                return;
+            }
+            if (tab.getGuiType() == TFCGuiHandler.Type.SKILLS && !ClientHelper.canDisplaySkills(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+            }
+        }
+    }
+
+    //disable calendar and nutrition tab
+    @SubscribeEvent(priority = EventPriority.LOWEST,receiveCanceled = true)
+    public static void buttonClick2(GuiScreenEvent.ActionPerformedEvent.Pre e) {
+        if ((e.getButton() instanceof GuiButtonPlayerInventoryTab)) {
+            GuiButtonPlayerInventoryTab tab = (GuiButtonPlayerInventoryTab) e.getButton();
+            System.out.println(tab.getGuiType());
+            if (tab.getGuiType() == TFCGuiHandler.Type.CALENDAR && !ClientHelper.hasCalendarTab(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+                return;
+            }
+            if (tab.getGuiType() == TFCGuiHandler.Type.NUTRITION && !ClientHelper.canDisplayNutrition(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
+                return;
+            }
+            if (tab.getGuiType() == TFCGuiHandler.Type.SKILLS && !ClientHelper.canDisplaySkills(Minecraft.getMinecraft().player)) {
+                e.setCanceled(true);
+                System.out.println("cannot open "+ tab.getGuiType()+ " at this time");
             }
         }
     }
@@ -120,7 +170,7 @@ public class ClientForgeEvents {
             } else if (s.contains("Biome")) {
                 return !ClientHelper.canDisplayBiome(player);
             } else {
-                return !s.contains("fps") && !s.contains("Minecraft");
+                return !s.contains("fps") && !s.contains("Minecraft") && !s.contains("Local");
             }
         });
     }
@@ -143,19 +193,19 @@ public class ClientForgeEvents {
 
             switch (enumfacing) {
                 case NORTH:
-                    s = "Towards negative Z";
+                    s = "negative Z";
                     break;
                 case SOUTH:
-                    s = "Towards positive Z";
+                    s = "positive Z";
                     break;
                 case WEST:
-                    s = "Towards negative X";
+                    s = "negative X";
                     break;
                 case EAST:
-                    s = "Towards positive X";
+                    s = "positive X";
             }
 
-            left.add("Facing " + s);
+            left.add("Facing Towards: " + s);
         }
 
         if (ClientHelper.canDisplayMoonPhase(player)) {
@@ -178,8 +228,19 @@ public class ClientForgeEvents {
                 return !ClientHelper.canDisplayRainfall(player);
             }
 
-            return s.contains("Optifine") || s.contains("Region") || s.startsWith("CPU") || s.startsWith("Display") || s.contains(GlStateManager.glGetString(7936)) ||
-                    s.contains(GlStateManager.glGetString(7937)) || s.contains(GlStateManager.glGetString(7938)) || s.contains("Temp");
+            if (s.contains("Spawn Protection")) {
+                return !ClientHelper.canDisplaySpawnProtectionTimer(player);
+            }
+
+            if (s.contains("Java") || s.contains("Allocated") || s.contains("Mem") ||s.contains("MCP") || s.contains("active") ||s.contains("Forge")) {
+                return false;
+            }
+
+            if (s.contains("Optifine")) {
+                return !ClientHelper.canDisplayMisc(player);
+            }
+
+            return true;
 
         });
     }
@@ -193,19 +254,23 @@ public class ClientForgeEvents {
 
             List<String> tempStrings = new ArrayList<>();
 
+            if (ClientHelper.canDisplayCurrentTemp(TooltipHandler.mc.player)) {
+                tempStrings.add(String.format("Current: %s%.1f\u00b0C%s", WHITE, data.getRegionalTemp(), GRAY));
+            }
+
             if (ClientHelper.canDisplayAverageTemp(TooltipHandler.mc.player)) {
                 tempStrings.add(String.format("Avg: %s%.1f\u00b0C%s", WHITE, data.getAverageTemp(), GRAY));
             }
 
             if (ClientHelper.canDisplayMaxTemp(TooltipHandler.mc.player)) {
-                tempStrings.add(String.format("C%s Max: %s%.1f\u00b0C%s", GRAY,
+                tempStrings.add(String.format("Max: %s%.1f\u00b0C%s",
                         WHITE, ClimateHelper.monthFactor(data.getRegionalTemp(), Month.JULY.getTemperatureModifier(), blockpos.getZ()), GRAY));
             }
 
 
 
             if (ClientHelper.canDisplayMinTemp(TooltipHandler.mc.player)) {
-                tempStrings.add(String.format("C%s Min: %s%.1f\u00b0C%s", GRAY,
+                tempStrings.add(String.format("Min: %s%.1f\u00b0C%s",
                         WHITE, ClimateHelper.monthFactor(data.getRegionalTemp(), Month.JANUARY.getTemperatureModifier(), blockpos.getZ()), GRAY));
             }
             if (!tempStrings.isEmpty()) {
@@ -223,7 +288,7 @@ public class ClientForgeEvents {
             }
 
             if (ClientHelper.canDisplayArboreal(player)) {
-                right.add("Trees");
+                right.add(new TextComponentString("Trees").setStyle(new Style().setColor(AQUA)).getFormattedText());
                 for (Tree tree : data.getValidTrees()) {
                     right.add(tree.getRegistryName().toString());
                 }
@@ -257,8 +322,11 @@ public class ClientForgeEvents {
     }
 
 
-    public static boolean hasMemoryOrKnowledge(EntityPlayer player, KnowledgeMemoryPair pair) {
-        return GameStageHelper.hasStage(player, pair.memory()) || hasItemWithKnowledge(player, pair.knowledge()) || Utils.hasOreDictItem(pair.base(),player.inventory);
+    public static boolean hasMemoryOrKnowledgeOrItem(EntityPlayer player, KnowledgeMemoryPair pair) {
+        if (GameStageHelper.hasStage(player, pair.memory())) return true;
+        if (hasItemWithKnowledge(player, pair.knowledge())) return true;
+        if (Utils.hasOreDictItem(pair.base(), player.inventory)) return true;
+        return false;
     }
 
     public static boolean hasItemWithKnowledge(EntityPlayer player, String stage) {
@@ -266,10 +334,6 @@ public class ClientForgeEvents {
     }
 
     public static boolean canDisplayFacing(EntityPlayer player) {
-        return player.inventory.hasItemStack(new ItemStack(Items.COMPASS));
-    }
-
-    public static boolean hasCalendarTab(EntityPlayer player) {
-        return Utils.hasOreDictItem(Stages.date.base(), player.inventory);
+        return hasMemoryOrKnowledgeOrItem(player,Stages.facing);
     }
 }

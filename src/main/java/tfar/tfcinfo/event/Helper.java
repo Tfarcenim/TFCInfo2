@@ -1,7 +1,6 @@
 package tfar.tfcinfo.event;
 
 import net.minecraft.entity.player.EntityPlayer;
-import tfar.tfcinfo.Stages;
 import tfar.tfcinfo.Utils;
 
 public class Helper {

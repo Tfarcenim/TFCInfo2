@@ -1,11 +1,15 @@
 package tfar.tfcinfo.recipes;
 
+import net.dries007.tfc.objects.items.ItemsTFC;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import tfar.tfcinfo.TFCInfoConfig;
 
 import javax.annotation.Nullable;
@@ -29,7 +33,11 @@ public class SpiritFluidStackIngredient extends Ingredient {
 		if (cachedStacks == null) {
 			List<ItemStack> stacks = new ArrayList<>();
 			for (String fluid : TFCInfoConfig.spirits) {
-				stacks.add(FluidUtil.getFilledBucket(new FluidStack(FluidRegistry.getFluid(fluid),1000)));
+				FluidStack fluidStack = new FluidStack(FluidRegistry.getFluid(fluid),1000);
+				stacks.add(FluidUtil.getFilledBucket(fluidStack));
+				ItemStack wooden = new ItemStack(ItemsTFC.WOODEN_BUCKET);
+				wooden.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).fill(fluidStack,true);
+				stacks.add(wooden);
 			}
 			cachedStacks = stacks.toArray(new ItemStack[0]);
 		}

@@ -18,6 +18,10 @@ public class KnowledgeMemoryPair {
         return base +"_memory";
     }
 
+    public String memorization() {
+        return base +"_memorization";
+    }
+
     //just need to have the item
     public String base() {
         return base;

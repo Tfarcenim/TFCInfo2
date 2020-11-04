@@ -8,9 +8,6 @@ import net.minecraftforge.event.RegistryEvent;
 import tfar.tfcinfo.item.ShowConfigItem;
 import tfar.tfcinfo.item.SlimeCompassItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ModItems {
 
     static final CreativeTabs tab = new CreativeTabs(TerrafirmaCraftInfo.MODID) {
@@ -19,6 +16,9 @@ public class ModItems {
             return new ItemStack(Blocks.COAL_BLOCK);
         }
     };
+
+    public static Item DIVINING_ROD = create();
+    public static Item ARBOREAL_SAMPLE = create();
     public static Item SPIRIT_THERMOMETER = create();
     public static Item RECENT_TEMPERATURE_RECORDS = create();
     public static Item MONSTER_FEROCITY_SAMPLE = create();
@@ -40,14 +40,16 @@ public class ModItems {
     public static Item TIME_BUNDLE = create();
     public static Item ENHANCED_TIME_BUNDLE = create();
     public static Item TRAILBLAZER_GEAR = create();
-    public static Item PDA = new ShowConfigItem().setCreativeTab(tab);
+    public static Item PDA = new ShowConfigItem(1).setCreativeTab(tab);
     public static Item SPACE_TIME_GEAR = create();
     public static Item FOURD_GEAR = create();
-    public static Item SURVIVAL_GUIDE = create();
-    public static Item TWENTY_FOURS_SURVIVAL_GUIDE = create();
+    public static Item SURVIVAL_GUIDE = new ShowConfigItem(0).setCreativeTab(tab);
+    public static Item TWENTY_FOURS_SURVIVAL_GUIDE = new ShowConfigItem(0).setCreativeTab(tab);
     public static Item CLIMATE_CHART = create();
-    public static Item ENCYCLOPEDIA = new ShowConfigItem().setCreativeTab(tab);
+    public static Item ENCYCLOPEDIA = new ShowConfigItem(1).setCreativeTab(tab);
     public static Item WORLD_MAP = create();
+    public static Item RECORD_HIGHS = create();
+    public static Item RECORD_LOWS = create();
 
     public static Item SLIME_COMPASS = new SlimeCompassItem().setCreativeTab(tab);
 
@@ -80,13 +82,17 @@ public class ModItems {
                 ENHANCED_TIME_BUNDLE.setRegistryName("enhanced_time_bundle").setTranslationKey(TerrafirmaCraftInfo.MODID + ".enhanced_time_bundle"),
                 TRAILBLAZER_GEAR.setRegistryName("trailblazer_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".trailblazer_gear"),
                 PDA.setRegistryName("pda").setTranslationKey(TerrafirmaCraftInfo.MODID + ".pda"),
-                SURVIVAL_GUIDE.setRegistryName("survival_guide").setTranslationKey(TerrafirmaCraftInfo.MODID + ".survival_guide"),
-                TWENTY_FOURS_SURVIVAL_GUIDE.setRegistryName("24s_survival_guide").setTranslationKey(TerrafirmaCraftInfo.MODID + ".24s_survival_guide"),
+                SURVIVAL_GUIDE.setRegistryName("survival_guide").setContainerItem(SURVIVAL_GUIDE).setTranslationKey(TerrafirmaCraftInfo.MODID + ".survival_guide"),
+                TWENTY_FOURS_SURVIVAL_GUIDE.setRegistryName("24s_survival_guide").setContainerItem(TWENTY_FOURS_SURVIVAL_GUIDE).setTranslationKey(TerrafirmaCraftInfo.MODID + ".24s_survival_guide"),
                 SPACE_TIME_GEAR.setRegistryName("space_time_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".space_time_gear"),
                 FOURD_GEAR.setRegistryName("4d_gear").setTranslationKey(TerrafirmaCraftInfo.MODID + ".4d_gear"),
                 CLIMATE_CHART.setRegistryName("climate_chart").setTranslationKey(TerrafirmaCraftInfo.MODID + ".climate_chart"),
                 ENCYCLOPEDIA.setRegistryName("encyclopedia").setContainerItem(ENCYCLOPEDIA).setTranslationKey(TerrafirmaCraftInfo.MODID + ".encyclopedia"),
-                WORLD_MAP.setRegistryName("world_map").setTranslationKey(TerrafirmaCraftInfo.MODID + ".world_map")
+                WORLD_MAP.setRegistryName("world_map").setTranslationKey(TerrafirmaCraftInfo.MODID + ".world_map"),
+                RECORD_HIGHS.setRegistryName("record_highs").setTranslationKey(TerrafirmaCraftInfo.MODID + ".record_highs"),
+                RECORD_LOWS.setRegistryName("record_lows").setTranslationKey(TerrafirmaCraftInfo.MODID + ".record_lows"),
+                ARBOREAL_SAMPLE.setRegistryName("arboreal_sample").setTranslationKey(TerrafirmaCraftInfo.MODID + ".arboreal_sample"),
+                DIVINING_ROD.setRegistryName("divining_rod").setTranslationKey(TerrafirmaCraftInfo.MODID + ".divining_rod")
         );
     }
 }

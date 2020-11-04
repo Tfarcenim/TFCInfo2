@@ -16,7 +16,7 @@ public class HwylaIntegration {
         List<String> tooltip = e.getCurrentTip();
         if (!ClientHelper.canDisplayHwyla(Minecraft.getMinecraft().player)) {
             tooltip.clear();
-            tooltip.add("Obtain a survival guide or better to unlock this information");
+            tooltip.add("Obtain a survival guide or better to learn about this.");
         }
     }
 }

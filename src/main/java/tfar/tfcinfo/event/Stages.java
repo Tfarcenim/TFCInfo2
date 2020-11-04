@@ -1,6 +1,9 @@
-package tfar.tfcinfo;
+package tfar.tfcinfo.event;
 
 import tfar.tfcinfo.util.KnowledgeMemoryPair;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Stages {
 
@@ -22,6 +25,7 @@ public class Stages {
 	public static final KnowledgeMemoryPair hwyla = new KnowledgeMemoryPair("hwyla");
 	public static final KnowledgeMemoryPair flora = new KnowledgeMemoryPair("flora");
 	public static final KnowledgeMemoryPair arboreal = new KnowledgeMemoryPair("arboreal");
+	public static final KnowledgeMemoryPair misc = new KnowledgeMemoryPair("misc");
 
 
 
@@ -33,4 +37,21 @@ public class Stages {
 	public static final KnowledgeMemoryPair constellation =  new KnowledgeMemoryPair("constellation");
 
 	public static final KnowledgeMemoryPair skills = new KnowledgeMemoryPair("skills");
+	public static final KnowledgeMemoryPair currentTemp = new KnowledgeMemoryPair("current_temp");
+
+	protected static HashSet<String> matches = new HashSet<>();
+
+	static {
+		Arrays.stream(Stages.class.getFields()).forEach(field -> {
+			try {
+				KnowledgeMemoryPair pair = (KnowledgeMemoryPair) field.get(null);
+				matches.add(pair.knowledge());
+				matches.add(pair.memory());
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+
 }

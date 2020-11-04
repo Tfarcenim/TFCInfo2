@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+
+  "ingredients": [
+    [
+      {
+        "item": "tfcinfo:survival_guide"
+      },
+      {
+        "item": "tfcinfo:24s_survival_guide"
+      }
+    ]
+    ,
+    {
+      "item": "minecraft:paper"
+    }
+  ],
+  "result": {
+    "item": "tfcinfo:climate_chart"
+  }
+}
